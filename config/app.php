@@ -27,9 +27,11 @@ return [
     // 入口自动绑定模块
     'auto_bind_module'       => false,
     // 注册的根命名空间
-    'root_namespace'         => [],
+    'root_namespace'         => [
+        'command' => '../command'
+    ],
     // 默认输出类型
-    'default_return_type'    => 'html',
+    'default_return_type'    => 'json',
     // 默认AJAX 数据返回格式,可选json xml ...
     'default_ajax_return'    => 'json',
     // 默认JSONP格式返回的处理方法

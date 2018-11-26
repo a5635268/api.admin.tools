@@ -1,0 +1,106 @@
+<?php
+
+namespace {%namespace%};
+
+use app\common\controller\Base;
+
+use app\common\model\Base Model;
+use \Exception;
+
+class {%className%} extends Base
+{
+
+    protected $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * 列表查询
+     * @return \think\Response
+     */
+    public function query()
+    {
+        $where = [];
+        $page = input('page/d', 1);
+        $pageSize = input('page_size/d', 20);
+        $order = null;
+        return $this->model->getList($where,$order,$page,$pageSize);
+    }
+
+
+    /**
+     * 新建
+     * @return \think\Response
+     */
+    public function add()
+    {
+        try {
+            return $this->model->add($this->postData);
+        } catch (Exception $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+    /**
+     * 显示内容
+     * @return \think\Response
+     */
+    public function content()
+    {
+        try {
+            return $this->model->getOne($this->postData);
+        } catch (Exception $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+    /**
+     * 显示编辑.
+     * @return \think\Response
+     */
+    public function edit()
+    {
+        try {
+            return $this->model->edit($this->postData);
+        } catch (Exception $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+
+    /**
+     * 删除指定资源
+     * @return \think\Response
+     */
+    public function delete()
+    {
+        try {
+            return $this->model->del($this->postData);
+        } catch (Exception $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+    // 启用
+    public function enable()
+    {
+        try {
+            return $this->model->changeStatus($this->postData , 1);
+        } catch (Exception $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+    // 禁用
+    public function disable()
+    {
+        try {
+            return $this->model->changeStatus($this->postData , 0);
+        } catch (Exception $ex) {
+            return $this->returnException($ex);
+        }
+    }
+}

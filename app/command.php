@@ -9,4 +9,10 @@
 // | Author: yunwuxin <448901948@qq.com>
 // +----------------------------------------------------------------------
 
-return [];
+// 命令都是可以自动注册的，此处只是为了重构原生命令才特别指定的
+return [
+    'app\common\Command\create\Controller' ,
+    'app\common\Command\create\Command' ,
+    'app\common\Command\create\Model' ,
+    'app\common\Command\create\Validate' ,
+];

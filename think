@@ -12,11 +12,14 @@
 
 namespace think;
 
+// 定义应用目录
+define('APP_PATH', __DIR__ . '/app/');
+
 // 加载基础文件
 require __DIR__ . '/thinkphp/base.php';
 
 // 应用初始化
-Container::get('app')->path(__DIR__ . '/application/')->initialize();
+Container::get('app')->path(APP_PATH)->initialize();
 
 // 控制台初始化
 Console::init();

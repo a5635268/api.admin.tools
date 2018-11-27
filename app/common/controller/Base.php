@@ -4,10 +4,6 @@ namespace app\common\controller;
 
 use think\Controller;
 use traits\ResponsDataBuild;
-use think\Cache;
-use libs\CacheKeyMap;
-use \libs\SnsSigCheck;
-use libs\Log;
 
 /**
  * 基控制器
@@ -18,21 +14,15 @@ class Base extends Controller
 {
     use ResponsDataBuild;
 
-    protected $model; //数据层
-    protected $postData; // 提交的post数据
-    protected $failException = true; //验证失败要抛出异常；
-    protected $redis; // think\cache\driver\Redis
-    protected $curl;
+    //验证失败要抛出异常；
+    protected $failException = true;
 
-    protected function initialize()
+    public function __construct()
     {
-        $this->postData = $this->request->post() ? : '';
-//        $this->redis = Cache::init();
-//        $this->curl = Curl();
+        parent::__construct();
     }
 
-
-    protected function validate($data, $validate, $message = [], $batch = false, $callback = null)
+    protected function validate($data , $validate , $message = [] , $batch = false , $callback = null)
     {
         // 解决TP5在数据为空时不进行验证的bug,如果后续升级后解决可把该方法撤掉；
         if (empty($data)) {
@@ -41,10 +31,11 @@ class Base extends Controller
             }
             return $this->validateError('数据不能为空');
         }
-        return parent::validate($data, $validate, $message, $batch, $callback);
+        return parent::validate($data , $validate , $message , $batch , $callback);
     }
 
     // 解决vue跨域的问题可以引用
+    // #todo 跨域通过中间件解决
     protected function crossHeader()
     {
         header('Access-Control-Allow-Origin:*');
@@ -52,13 +43,5 @@ class Base extends Controller
         header('Access-Control-Allow-Methods:POST');
         // 响应头设置
         header('Access-Control-Allow-Headers:x-requested-with,content-type');
-    }
-
-    // redis排重锁
-    protected function redisLock($key, $value, $expires)
-    {
-        //在key不存在时,添加key并$expires秒过期
-        $lockRes = $this->redis->handler()->set($key, $value, ['nx', 'ex' => $expires]);
-        $lockRes || $this->exitJson($this->returnError(6));
     }
 }

@@ -9,7 +9,7 @@
 namespace libs;
 
 
-class pinyinfirstchar
+class Pinyinfirstchar
 {
     private $_pinyins = array(
         176161 => 'A',
@@ -153,6 +153,7 @@ class pinyinfirstchar
         }
         return strtoupper(implode('',$result));
     }
+
     private function _getChar( $ascii )
     {
         if ( $ascii >= 48 && $ascii <= 57){

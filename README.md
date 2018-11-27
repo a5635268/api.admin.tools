@@ -9,4 +9,3 @@ XGservice - 基于TP5的快速api构建
     - [x] 新增`__call`,`redisLock`,`getInstance`
     - [x] 新增`CachekeyMap`静态类，批量管理缓存key
 - [ ] 常用类库添加以及对应使用示例
-

@@ -7,7 +7,6 @@ use think\console\Output;
 use think\console\input\Argument;
 use think\console\input\Option;
 use libs\Log;
-use think\facade\Cache;
 
 use app\index\model\Game;
 
@@ -52,9 +51,9 @@ class Test extends Base
 
     public function test()
     {
-        $redis = \libs\Redis::getInstance();
-
-        $redis->lPush('hahaha',2,3,4,5,6,7);
+        $game = new  Game();
+        $r = $game->limit(2)
+            ->cache(true)->select();
     }
 
 

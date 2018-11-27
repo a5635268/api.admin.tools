@@ -60,6 +60,12 @@ class Redis extends tpRedis{
         return $this->handler()->set($key, $value, ['nx', 'ex' => $expires]);
     }
 
+
+    public function test($name = 'world')
+    {
+        echo 'hello ' . $name;
+    }
+
     /**
      * 调用缓存类型自己的高级方法
      * @param $method

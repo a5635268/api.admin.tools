@@ -3,18 +3,16 @@
 namespace {%namespace%};
 
 use app\common\controller\Base;
-
-use app\common\model\Base Model;
 use \Exception;
 
 class {%className%} extends Base
 {
+    protected $game;
 
-    protected $model;
-
-    public function __construct(Model $model)
+    public function __construct(Game $game)
     {
-        $this->model = $model;
+        parent::__construct();
+        $this->game = $game;
     }
 
     /**
@@ -29,7 +27,6 @@ class {%className%} extends Base
         $order = null;
         return $this->model->getList($where,$order,$page,$pageSize);
     }
-
 
     /**
      * 新建

@@ -9,12 +9,25 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
+// 强制使用路由
+Route::miss('publics/miss');
+
+// 主页路由
+Route::get('/', function () {
     return 'hello,ThinkPHP5!';
 });
 
-Route::get('hello/:name', 'index/hello');
+// 测试
+Route::get('test','publics/test');
 
-return [
-
+// 路由分组
+$routeTest = [
+    ':id' => 'index/Route/index',
+    ':name' => 'index/Route/index',
+    'create' => 'index/Route/create',
 ];
+
+// 中间件指定
+Route::group('route',$routeTest)
+    ->pattern(['id' => '\d+', 'name' => '\w+']);
+   //  ->middleware('checkhaha');

@@ -15,4 +15,5 @@ return [
     'app\common\Command\create\Command' ,
     'app\common\Command\create\Model' ,
     'app\common\Command\create\Validate' ,
+    'app\common\Command\create\Middleware' ,
 ];

@@ -15,6 +15,6 @@ class Base extends Command
 
     protected function execute(Input $input , Output $output)
     {
-        $output->info('继承用的base命令,所有自定义命令都要继承该方法');
+        $output->info('继承用的base命令,所有自定义命令都要继承该方法，便于后期的扩展和维护');
     }
 }

@@ -15,7 +15,5 @@
 // 注意此处仅仅是定义中间件的别名，便于路由调用
 return [
     // 默认中间件命名空间
-    // 'default_namespace' => 'app\\common\\middleware\\default',
-    // 'default_namespace' => 'app\\http\\middleware\\',
-    'checkhaha' => 'app\http\middleware\Check'
+    'default_namespace' => 'app\\common\\middleware',
 ];

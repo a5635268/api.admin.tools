@@ -11,6 +11,7 @@
 
 namespace app\common\Command\create;
 
+
 class Validate extends create
 {
     protected $type = "Validate";

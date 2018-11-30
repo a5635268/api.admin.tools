@@ -7,7 +7,7 @@ use think\Facade;
 /**
  * Class JWT
  * @package app\common\facade
- * @method mixed decode($token) static 解析token
+ * @method mixed decode(\string $token) static 解析token
  * @method mixed encode($data) static 生成token
  */
 class JWT extends Facade

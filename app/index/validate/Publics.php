@@ -1,5 +1,5 @@
 <?php
-namespace {%namespace%};
+namespace app\index\validate;
 
 use app\common\validate\Base;
 
@@ -8,7 +8,7 @@ use app\common\validate\Base;
  * https://www.kancloud.cn/manual/thinkphp5/129356
  * @package app\daily\validate
  */
-class {%className%} extends Base
+class Publics extends Base
 {
     //定义验证规则
     protected $rule = [
@@ -22,7 +22,7 @@ class {%className%} extends Base
 
     //定义验证场景
     protected $scene = [
-        'scene1' => [],
+        'test' => [],
     ];
 
 }

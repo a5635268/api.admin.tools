@@ -1,12 +1,12 @@
 <?php
 
 namespace libs;
+
 /**
  * 缓存key映射类：缓存KEY要统一配置，便于后期批量更改和管理
- * Author: Zhou xiaogang
- * Date: 2017/11/14
- * Time: 14:15
+ * 注意其命名规则： 项目名：模块名：名称：类型  tkmall:member:username:str
  * Class CacheKeyMap
+ * @package libs
  */
 class CacheKeyMap
 {

@@ -15,6 +15,7 @@ use traits\ResponsDataBuild;
 class Base extends Model
 {
     use ResponsDataBuild;
+
     protected $autoWriteTimeStamp = true;
     // 验证失败要抛出异常；
     protected $failException = true;

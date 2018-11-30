@@ -1,23 +1,41 @@
-<?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 流年 <liu21st@gmail.com>
-// +----------------------------------------------------------------------
+<?PHP
+/**
+ * 公共函数库
+ */
 
-// 应用公共文件
-error_reporting(E_ERROR | E_PARSE);//过滤错误
+/**
+ * 强大的打印调试函数
+ * https://symfony.com/doc/current/components/var_dumper.html
+ * @param $var
+ * @return array
+ */
+function d($var)
+{
+    foreach (func_get_args() as $v) {
+        if(is_string($v) || is_numeric($v)){
+            $v = new \ErrorException(
+                $v,
+                1,
+                E_WARNING
+            );
+        }
+        Symfony\Component\VarDumper\VarDumper::dump($v);
+    }
 
-// 常量定义
-define('NOW', time());
+    if (1 < func_num_args()) {
+        return func_get_args();
+    }
 
-define('KEY', 'N5CXoCgVKoGKY19m');
+    return $var;
+}
 
-// 环境定义
-//define('WEB_VERSION', 'develop'); //开发
-define('WEB_VERSION', 'test');  //测试
-//define('WEB_VERSION', 'product');    //正式
+/**
+ * 断掉的打印
+ * @param $var
+ */
+function dd($var){
+    foreach (func_get_args() as $v) {
+        d($var);
+    }
+    die;
+}

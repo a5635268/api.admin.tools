@@ -11,4 +11,6 @@ XGservice - 基于TP5的快速api构建
     - [x] 新增`CachekeyMap`静态类，批量管理缓存key
 - [x] 架构层面功能的使用示例增加：服务提供者，门面绑定，钩子回调，中间件，路由
 - [x] `ResponsData`优化，以及`facade`静态调用与`traits`继承增加
-- [x] 全局验证器中间件`Validate`增加
+- [x] 全局参数验证器中间件`Validate`增加,自动验证不同接口的请求参数
+- [x] 全局签名窜验证器中间件`SignCheck`增加，自动验证接口签名窜
+- [ ]

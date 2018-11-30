@@ -20,12 +20,13 @@ namespace libs;
 class SnsSigCheck
 {
     /**
-     * 生成签名
-     *
+     * 生成签名: 后端和后端调用就这个
+     * http://wiki.open.qq.com/wiki/%E8%85%BE%E8%AE%AF%E5%BC%80%E6%94%BE%E5%B9%B3%E5%8F%B0%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E7%AD%BE%E5%90%8D%E5%8F%82%E6%95%B0sig%E7%9A%84%E8%AF%B4%E6%98%8E
      * @param string $method 请求方法 "get" or "post"
      * @param string $url_path
      * @param array $params 表单参数
      * @param string $secret 密钥
+     * @return string
      */
     static public function makeSig($method, $url_path, $params, $secret)
     {
@@ -51,56 +52,26 @@ class SnsSigCheck
     }
 
     /**
-     * 验证回调发货URL的签名 (注意和普通的OpenAPI签名算法不一样，详见@refer的说明)
-     *
-     * @param string $method 请求方法 "get" or "post"
-     * @param string $url_path
-     * @param array $params 腾讯调用发货回调URL携带的请求参数
-     * @param string $secret 密钥
-     * @param string $sig 腾讯调用发货回调URL时传递的签名
-     *
-     * @refer
-     *  http://wiki.open.qq.com/wiki/%E5%9B%9E%E8%B0%83%E5%8F%91%E8%B4%A7URL%E7%9A%84%E5%8D%8F%E8%AE%AE%E8%AF%B4%E6%98%8E_V3
+     * 验证不通过，返回false; 后端和前端调用就用这个
+     * @param $data
+     * @return bool
      */
-    static public function verifySig($method, $url_path, $params, $secret, $sig)
+    static public function verificationData($data)
     {
-        unset($params['sig']);
-
-        // 先使用专用的编码规则对value编码
-        foreach ($params as $k => $v) {
-            $params[$k] = self::encodeValue($v);
+        if(empty($data['sign'])){
+            return false;
         }
-
-        // 再计算签名
-        $sig_new = self::makeSig($method, $url_path, $params, $secret);
-
-        return $sig_new == $sig;
-    }
-
-    /**
-     * 回调发货URL专用的编码算法
-     *  编码规则为：除了 0~9 a~z A~Z !*()之外其他字符按其ASCII码的十六进制加%进行表示，例如"-"编码为"%2D"
-     * @refer
-     *  http://wiki.open.qq.com/wiki/%E5%9B%9E%E8%B0%83%E5%8F%91%E8%B4%A7URL%E7%9A%84%E5%8D%8F%E8%AE%AE%E8%AF%B4%E6%98%8E_V3
-     */
-    static private function encodeValue($value)
-    {
-        $rst = '';
-
-        $len = strlen($value);
-
-        for ($i = 0; $i < $len; $i++) {
-            $c = $value[$i];
-            if (preg_match("/[a-zA-Z0-9!\(\)*]{1,1}/", $c)) {
-                $rst .= $c;
-            } else {
-                $rst .= ("%" . sprintf("%02X", ord($c)));
-            }
+        $apiSecret = $data['sign'];
+        unset($data['sign']);
+        krsort($data);
+        config('jwt.key','doulong');
+        $key = md5(md5(json_encode($data , JSON_UNESCAPED_SLASHES)) . config('jwt.key'));
+        if ($apiSecret !== $key) {
+            return false;
         }
-
-        return $rst;
+        $data['sign'] = $apiSecret;
+        return $data;
     }
 }
-
 
 // end of script

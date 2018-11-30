@@ -28,7 +28,6 @@ class Validate extends Base
                 }catch (ValidateException $ex){
                     $this->exitJson($this->validateError($ex->getMessage()));
                 }
-
             }
         }
         return $next($request);

@@ -18,7 +18,8 @@ Route::get('/', function () {
 });
 
 // 测试
-Route::get('test','publics/test');
+Route::rule('test','publics/test');
+
 
 // 路由分组
 $routeTest = [

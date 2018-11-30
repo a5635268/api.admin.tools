@@ -13,6 +13,7 @@ class Publics extends Base
 
     public function test()
     {
+        echo 222;die;
         $r = ResponsData::returnSucc('hahahah');
         d($r);
     }

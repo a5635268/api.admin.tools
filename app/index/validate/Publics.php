@@ -22,7 +22,7 @@ class Publics extends Base
 
     //定义验证场景
     protected $scene = [
-        'test' => [],
+        'testss' => [],
     ];
 
 }

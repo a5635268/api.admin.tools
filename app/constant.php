@@ -5,7 +5,7 @@
  */
 
 //过滤错误
-error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ALL ^ E_NOTICE);
 
 // 常量定义
 define('NOW', time());
@@ -13,4 +13,4 @@ define('NOW', time());
 // 环境定义
 //define('WEB_VERSION', 'develop'); //开发
 define('WEB_VERSION', 'test');  //测试
-//define('WEB_VERSION', 'product');    //正式
+//define('WEB_VERSION', 'product'); //正式

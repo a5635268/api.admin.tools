@@ -25,6 +25,10 @@ return [
     'view_filter'  => [],
     // 日志写入
     'log_write'    => [],
+    // 日志级别
+    'log_level' => [
+        'app\\common\\behavior\\LogAlarm'
+    ],
     // 应用结束
     'app_end'      => [],
 ];

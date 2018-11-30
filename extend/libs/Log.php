@@ -2,10 +2,10 @@
 
 namespace libs;
 
-use think\Log as TPlog;
+use think\facade\Log as TPlog;
 
 /**
- * 自定义日志适配器
+ *
  * 先适配TP本身的FILE日志，后续可无缝移植到其它日志架构（seaLog || monolog）；
  * Class Log
  * @package libs
@@ -15,14 +15,23 @@ use think\Log as TPlog;
  * @method void warn($message)
  * @method void debug($message)
  */
+
+/**
+ * 自定义日志适配器,多参数记录
+ * Class Log
+
+ * @method void emergency(mixed $message, array $context = []) static 记录emergency信息
+ * @method void alert(mixed $message, array $context = []) static 记录alert信息
+ * @method void critical(mixed $message, array $context = []) static 记录critical信息
+ * @method void error(mixed $message, array $context = []) static 记录error信息，会造成程序运行，业务逻辑错误，脏数据等，需要及时处理和解决；
+ * @method void warning(mixed $message, array $context = []) static 记录warning信息，程序能正常运行，业务逻辑没错误，但需要及时解决；
+ * @method void notice(mixed $message, array $context = []) static 记录notice信息，程序能正常运行，业务逻辑没错误但不美；
+ * @method void info(mixed $message, array $context = []) static 需要关注的。像用户登录，交易等入参；
+ * @method void debug(mixed $message, array $context = []) static 记录debug信息
+ * @method void sql(mixed $message, array $context = []) static 记录sql信息
+ * @package libs
+ */
 class Log {
-
-    const INFO   = 'info';  // 需要关注的。像用户登录，交易等入参；
-    const ERROR  = 'err';  // 错误，会造成程序运行，业务逻辑错误，脏数据等，需要及时处理和解决；
-    const WARN  =  'warn'; // 程序能正常运行，业务逻辑没错误但不美；
-    const DEBUG = 'debug'; // 调试日志
-
-    protected static $type = ['info' => 'log', 'err' => 'error', 'warn' => 'notice','debug' => 'debug'];
 
     /**
      * 静态调用
@@ -32,23 +41,6 @@ class Log {
      */
     public static function __callStatic($method, $args = [])
     {
-        if (in_array($method, array_keys(self::$type))) {
-            $level = self::$type[$method];
-            $args[] = self::serviceLog();
-            return TPlog::$level($args);
-        }
+        return TPlog::$method($args);
     }
-
-    public static function serviceLog($message = ''){
-        // 获取基本信息
-        $runtime    = round(microtime(true) - THINK_START_TIME, 10);
-        $reqs       = $runtime > 0 ? number_format(1 / $runtime, 2) : '∞';
-        $time_str   = '[运行时间：' . number_format($runtime, 6) . 's][吞吐率：' . $reqs . 'req/s]';
-        $memory_use = number_format((memory_get_usage() - THINK_START_MEM) / 1024, 2);
-        $memory_str = ' [内存消耗：' . $memory_use . 'kb]';
-        $file_load  = ' [文件加载：' . count(get_included_files()) . ']';
-        $message = $time_str . $memory_str . $file_load  . $message;
-        return $message;
-    }
-
 }

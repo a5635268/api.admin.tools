@@ -35,7 +35,7 @@ function d($var)
  */
 function dd($var){
     foreach (func_get_args() as $v) {
-        d($var);
+        d($v);
     }
     die;
 }

@@ -2,7 +2,7 @@
 namespace app\index\controller;
 
 use app\common\controller\Base;
-use app\common\facade\ResponsData;
+use libs\Log;
 
 class Publics extends Base
 {
@@ -13,8 +13,6 @@ class Publics extends Base
 
     public function test()
     {
-        echo 222;die;
-        $r = ResponsData::returnSucc('hahahah');
-        d($r);
+        Log::error('hahah','heihei','yayayay');
     }
 }

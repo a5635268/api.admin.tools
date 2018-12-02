@@ -16,5 +16,4 @@ class Publics extends Base
        $res = service('user');
        dd($res);
     }
-
 }

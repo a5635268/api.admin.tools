@@ -4,20 +4,9 @@ namespace libs;
 
 use think\facade\Log as TPlog;
 
-/**
- *
- * 先适配TP本身的FILE日志，后续可无缝移植到其它日志架构（seaLog || monolog）；
- * Class Log
- * @package libs
- *
- * @method void info($message)
- * @method void err($message)
- * @method void warn($message)
- * @method void debug($message)
- */
 
 /**
- * 自定义日志适配器,多参数记录
+ * 自定义日志适配器,多参数记录,先适配TP本身的FILE日志，后续可无缝移植到seaLog日志架构
  * Class Log
 
  * @method void emergency(mixed $message, array $context = []) static 记录emergency信息

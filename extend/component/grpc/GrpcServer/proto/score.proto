@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package grpc;
+
+//请求参数
+message UserScoreGrpcRequest {
+    int32 type = 1;
+    int64 uid = 2;
+    double change_scores = 3;
+    int32 src_id = 4;
+    string comment = 5;
+    string order_no = 6;
+}
+
+//响应参数
+message GrpcResult {
+    string code = 1;
+    string msg = 2;
+    string data = 3;
+}
+
+//服务端接口类
+service UserScore {
+  rpc updateScore (UserScoreGrpcRequest) returns (GrpcResult) {}      //修改积分
+}

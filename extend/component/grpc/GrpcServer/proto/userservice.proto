@@ -1,0 +1,121 @@
+syntax = "proto3";
+
+enum Platform {
+    WEB = 0;
+    APP = 1;
+    OTHER = 2;
+}
+
+message Result {
+    enum Status {
+        SUCCESS = 0;
+        ERROR = 1;
+      }
+    Status status = 1;
+    string message = 2;
+    string body = 3;
+}
+
+message Request {
+    string app_id = 1;
+    string body = 2;
+}
+
+/*
+1.所有请求实体Request包装后发送，body是一段字符串
+2.body数据通过实体参数对象JSON后AES加密字符串，接收方通过AES解密然后反序列化得到实体参数对象
+3.
+*/
+
+service UserService {
+    // body中实体参数对象 JSON格式
+    // {
+    //     "uid":111
+    // }
+    rpc GetByUid(Request) returns (Result) {}
+    // body中实体参数对象 JSON格式
+    // {
+    //     "token":“”
+    // }
+    rpc GetByToken(Request) returns(Result) {}
+    // body中实体参数对象 JSON格式
+    // {
+    //     "user_name":“”，
+    //     “properties”:{}  字典,扩展数据
+    // }
+    rpc IsExist(Request) returns(Result) {}
+    // 用户名和密码登录
+    // body中实体参数对象 JSON格式
+    // {
+    //     "user_name":“”，
+    //     “password”：“”，
+    //     “platform”: 1  枚举
+    // }
+    rpc SignIn(Request) returns(Result) {}
+    // 通过第三方登录
+    // body中实体参数对象 JSON格式
+    // {
+    //     "app_id":“”，
+    //     “open_id”：“”，
+    //     "union_id":"",
+    //     “platform”: 1  枚举
+    // }
+    rpc OAuthSignIn(Request) returns(Result){}
+    // 用户名和密码注册
+    // body中实体参数对象 JSON格式
+    // {
+    //     "user_name":“”，
+    //     “nick_name”：“”，
+    //     "password":"",
+    //     “properties”:{}  字典,扩展数据
+    // }
+    rpc Register(Request) returns(Result) {}
+    // 通过第三方注册
+    // body中实体参数对象 JSON格式
+    // {
+    //     "app_id":“”，
+    //     “open_id”：“”，
+    //     "union_id":"",
+    //     “properties”:{}  字典,扩展数据
+    // }
+    rpc OAuthRegister(Request) returns(Result) {}
+    // 已通过第三方注册，需要绑定手机号
+    // body中实体参数对象 JSON格式
+    // {
+    //     "app_id":“”，
+    //     “open_id”：“”，
+    //     "mobile":""
+    // }
+    rpc OAuthBindMobile(Request) returns(Result) {}
+    // 判断token是否合法
+    // body中实体参数对象 JSON格式
+    // {
+    //     同GetByToken接口
+    // }
+    rpc CheckToken(Request) returns(Result) {}
+    // 扩展接口
+    // body中实体参数对象 JSON格式
+    // {
+    //     "handle":"", 处理方法名
+    //     "body":" 方法名需要的实体参数JSON，不加密
+    // }
+    // handle 方法包括:
+    // 1. SetPasswordHandle 重设用户密码
+    // 参数JSON格式: 
+    // {
+    //     "uid":11,
+    //     "password":""
+    // }
+    // 2. RefreshToken 刷新token
+    // 参数JSON格式: 
+    // {
+    //     "token":“”
+    // }
+    // 3. UpdateNickname 更新昵称
+    // 参数JSON格式: 
+    // {
+    //     "uid":11,
+    //     "nick_name":""
+    // }
+    rpc Handle(Request) returns(Result) {}
+}

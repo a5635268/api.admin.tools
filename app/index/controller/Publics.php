@@ -2,7 +2,7 @@
 namespace app\index\controller;
 
 use app\common\controller\Base;
-use libs\Log;
+
 
 class Publics extends Base
 {
@@ -13,6 +13,8 @@ class Publics extends Base
 
     public function test()
     {
-        Log::error('hahah','heihei','yayayay');
+       $res = service('user');
+       dd($res);
     }
+
 }

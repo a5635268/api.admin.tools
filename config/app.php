@@ -28,7 +28,14 @@ return [
     'auto_bind_module'       => false,
     // 注册的根命名空间
     'root_namespace'         => [
-        'command' => '../command'
+        'command' => '../command',
+
+        // 由于GRPC通过protocl生成的代码一定要在顶级命名空间
+        // 不知道怎么解决,有可能要重新生成一次，此处先注册顶级命名空间
+        'GPBMetadata' => '../extend/component/grpc/GPBMetadata',
+        'Grpc' => '../extend/component/grpc/Grpc',
+        'GrpcServer' => '../extend/component/grpc/GrpcServer',
+        'Userservice' => '../extend/component/grpc/Userservice'
     ],
     // 默认输出类型
     'default_return_type'    => 'json',

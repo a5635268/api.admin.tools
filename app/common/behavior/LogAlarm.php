@@ -12,7 +12,7 @@ class LogAlarm
         list($type , $message) = $params;
 
         if ('error' == $type) {
-            #todo:
+            #todo: 这个地方要异步发送
             // mail('admin@mail.com' , '日志报警' , implode(' ' , $message));
         }
     }

@@ -28,6 +28,9 @@ XGservice - 基于TP5的快速api构建
     - [x] 增加日志警报器，error级别日志自动发邮件通知
     - [ ] 接入seasLog驱动
     - [ ] 增加ELK架构，实时监控日志
+- [ ] GRPC封装
+- [ ] rabbitMQ客户端与服务端封装
+- [ ] workerman示例封装
 - [ ] 文件上传封装（本地上传，OSS上传） **杨立东**
 - [ ] 邮件发送封装  **杨立东**
 - [ ] excel，csv 导入导出封装  **刘兆伦**
@@ -37,8 +40,7 @@ XGservice - 基于TP5的快速api构建
 - [ ] http client和curl的封装 **刘兆伦**
 - [ ] 基于elasticsearch的搜索引擎封装
 - [ ] PHP多进程爬虫封装
-- [ ] GRPC封装
-- [ ] rabbitMQ客户端与服务端封装
-- [ ] workerman示例封装
 - [ ] swoole示例封装
 - [ ] 支付示例封装
+- [ ] 远程调试示例
+- [ ] 接口文档自动生成

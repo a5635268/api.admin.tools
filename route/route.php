@@ -20,6 +20,8 @@ Route::get('/', function () {
 // 测试
 Route::rule('test','publics/test');
 
+Route::rule('sendEmail','publics/sendEmail');
+Route::rule('test2','publics/test2');
 
 // 路由分组
 $routeTest = [
@@ -31,4 +33,4 @@ $routeTest = [
 // 中间件指定
 Route::group('route',$routeTest)
     ->pattern(['id' => '\d+', 'name' => '\w+']);
-   //  ->middleware('checkhaha');
+//    ->middleware(['validate']);

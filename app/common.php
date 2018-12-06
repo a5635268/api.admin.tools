@@ -49,3 +49,18 @@ function service($name)
     }
     return controller($name, 'service');
 }
+
+function download_image($url){
+    $pathInfo = pathinfo($url);
+    $filename = md5($url) . '.' . $pathInfo['extension'];
+    $filePath = PUBLIC_PATH. '/image/' . $filename;
+    if (file_exists($filePath)) {
+        return $filePath;
+    }
+    $bt = file_get_contents($url);
+    if (empty($bt)) {
+        return '';
+    }
+    file_put_contents($filePath, $bt);
+    return $filePath;
+}

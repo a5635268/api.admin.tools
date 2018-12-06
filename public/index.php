@@ -11,9 +11,9 @@
 
 // [ 应用入口文件 ]
 namespace think;
-
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../app/');
+define('PUBLIC_PATH', __DIR__ );
 
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';

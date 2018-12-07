@@ -53,7 +53,7 @@ function service($name)
 function download_image($url){
     $pathInfo = pathinfo($url);
     $filename = md5($url) . '.' . $pathInfo['extension'];
-    $filePath = PUBLIC_PATH. '/image/' . $filename;
+    $filePath = PUBLIC_PATH. '/uploads/image/' . $filename;
     if (file_exists($filePath)) {
         return $filePath;
     }

@@ -22,6 +22,7 @@ Route::rule('test','publics/test');
 
 Route::rule('sendEmail','publics/sendEmail');
 Route::rule('test2','publics/test2');
+Route::rule('upload','publics/upload');
 
 // 路由分组
 $routeTest = [

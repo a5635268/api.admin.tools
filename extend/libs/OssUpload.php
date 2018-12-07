@@ -13,10 +13,10 @@ class OssUpload
 {
     static   $accessKeyId = 'LTAIpx15RUnaW95Q';   //yourAccessKeyId
     static   $accessKeySecret  = 'S4xlW78AKECC25zXHBbseOlw0B97jJ'; //yourAccessKeySecret
-    static   $endpoint   = 'oss-cn-shanghai.aliyuncs.com'; // Endpoint以杭州为例，其它Region请按实际情况填写。
+    static   $endpoint   = 'oss-cn-shanghai.aliyuncs.com'; // Endpoint以上海为例，其它Region请按实际情况填写。
     static   $_ossClient;
-    private $bucket;
-    private $directoryName;
+    static  $bucket;
+    static  $directoryName;
 
     /**
      * OssUpload constructor.
@@ -26,8 +26,8 @@ class OssUpload
      */
     public function __construct($bucket='',$directoryName='')
     {
-        $this->bucket = $bucket ? : 'loongcent';
-        $this->directoryName = $directoryName ? :'';
+        self::$bucket = $bucket ? : 'loongcent';
+        self::$directoryName = $directoryName ? :'';
         if (!is_null(self::$_ossClient)) {
             return self::$_ossClient;
         }
@@ -47,18 +47,18 @@ class OssUpload
     public function upload($filePath, $oldUrl = '', $type = true, $ext = '.jpg'){
         if ($oldUrl) {
             $pattern = '/(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+\/?/';
-            $path = $this->directoryName . preg_replace($pattern, '', pathinfo($oldUrl, PATHINFO_DIRNAME)) . '/' . pathinfo($oldUrl, PATHINFO_BASENAME);
+            $path = self::$directoryName . preg_replace($pattern, '', pathinfo($oldUrl, PATHINFO_DIRNAME)) . '/' . pathinfo($oldUrl, PATHINFO_BASENAME);
         } else {
-            $path = $this->directoryName . ($type ? basename($filePath) : md5(time() . rand(1, 10000)) . $ext);
+            $path = self::$directoryName . ($type ? basename($filePath) : md5(time() . rand(1, 10000)) . $ext);
         }
         try{
-            self::$_ossClient->uploadFile($this->bucket, $path, $filePath);
+            self::$_ossClient->uploadFile(self::$bucket, $path, $filePath);
         } catch(OssException $e) {
             printf(__FUNCTION__ . ": FAILED\n");
             printf($e->getMessage() . "\n");
             return;
         }
-        return $path;
+        return 'http://'.self::$bucket.'.'.self::$endpoint.'/'.$path;
     }
 
     /**
@@ -72,7 +72,7 @@ class OssUpload
             OssClient::OSS_FILE_DOWNLOAD => $localfile
         );
         try{
-            $content = self::$_ossClient->getObject($this->bucket, $patch,$options);
+            $content = self::$_ossClient->getObject(self::$bucket, $patch,$options);
         } catch(OssException $e) {
             printf(__FUNCTION__ . ": FAILED\n");
             printf($e->getMessage() . "\n");

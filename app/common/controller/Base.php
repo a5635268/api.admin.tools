@@ -2,6 +2,7 @@
 
 namespace app\common\controller;
 
+use libs\OssUpload;
 use think\Controller;
 use traits\ResponsDataBuild;
 
@@ -43,5 +44,40 @@ class Base extends Controller
         header('Access-Control-Allow-Methods:POST');
         // 响应头设置
         header('Access-Control-Allow-Headers:x-requested-with,content-type');
+    }
+
+    /**
+     * 图片上传
+     * @access public
+     * @param string 上传文件对应的资源文件夹地址
+     * @param int $size 限制大小
+     * @param string $ext 文件类型
+     * @return array
+     * @throws \OSS\Core\OssException
+     */
+    public function upload($filePath='uploads', $size = 5120000, $ext = 'jpg,jpeg,JPG,png,gif')
+    {
+        $files = request()->file();
+        //$images = array();
+        $ali = array();
+        if(empty($files)){
+            return $this->validateError('缺少文件资源');
+        }
+        foreach($files as $file){
+            $info = $file->validate(
+                ['size'=>$size,'ext'=>$ext,'mine'=>"image"]
+            )->move($filePath);
+            if($info){
+                // push进数组
+                $path = $filePath.'/'.str_replace('\\', '/', $info->getSaveName());
+                //array_push($images,$path);
+                $OssUpload = new OssUpload();
+                array_push($ali,$OssUpload->upload(PUBLIC_PATH.'/'.$path));
+            }else{
+                return $this->returnError(6, [], $file->getError());
+            }
+        }
+        // 成功上传后 获取上传信息
+        return $this->returnRight($ali);
     }
 }

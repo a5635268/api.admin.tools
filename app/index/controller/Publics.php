@@ -14,7 +14,8 @@ class Publics extends Base
 
     public function test()
     {
-       $res = service('user');
+       $body = ['uid' => 1];
+       $res = service('user')->setBoby($body)->send('GetByUid');
        dd($res);
     }
 
@@ -38,6 +39,5 @@ class Publics extends Base
         }
         $OssUpload = new OssUpload();
         $path = $OssUpload->upload($filePath);
-
     }
 }

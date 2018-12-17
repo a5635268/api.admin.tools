@@ -7,10 +7,12 @@
  */
 
 namespace libs;
+
 class Mail
 {
     protected static $username = 'loongcent@163.com';
     protected static $password = 'loongcent2017';
+
     /**
      * @access public
      * @param $subject 邮件标题

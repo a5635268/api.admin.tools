@@ -9,8 +9,12 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-// [ 应用入口文件 ]
+// [ 应用入口文件 ] designmode
 namespace think;
+
+phpinfo();
+die;
+
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../app/');
 define('PUBLIC_PATH', __DIR__ );

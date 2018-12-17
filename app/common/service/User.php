@@ -59,7 +59,7 @@ class User
         $input = $this->pkcs5Pad($input, $size);
         $td = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_ECB, '');
         $iv = '0102030405060708';
-        mcrypt_generic_init($td, GRPC_SECRETKEY, $iv);
+        mcrypt_generic_init($td, self::SECRETKEY, $iv);
         $data = mcrypt_generic($td, $input);
         mcrypt_generic_deinit($td);
         mcrypt_module_close($td);
@@ -87,7 +87,7 @@ class User
         $iv = '';
         $decrypted= mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,
-            GRPC_SECRETKEY,
+            self::SECRETKEY,
             hex2bin($sStr),
             MCRYPT_MODE_ECB,
             $iv

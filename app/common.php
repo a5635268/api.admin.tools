@@ -910,7 +910,7 @@ function getRandomN($len)
 }
 
 
-function getRand($len)
+function get_rand($len)
 {
     $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
     $string = msectime();
@@ -925,7 +925,7 @@ function getRand($len)
 /**
  *根据生日计算年龄
  */
-function getAge($birthday)
+function get_age($birthday)
 {
     $age = strtotime($birthday);
     if ($age === false) {
@@ -943,7 +943,7 @@ function getAge($birthday)
 /**
  *根据生日计算星座
  */
-function getZodiac($birthday)
+function get_zodiac($birthday)
 {
     $age = strtotime($birthday);
     $month = date("m", $age);
@@ -969,7 +969,7 @@ function getZodiac($birthday)
     return $sign_name;
 }
 
-function hideStr($string, $bengin = 0, $len = 4, $type = 0, $glue = "@")
+function hide_str($string, $bengin = 0, $len = 4, $type = 0, $glue = "@")
 {
     if (empty($string))
         return false;
@@ -993,12 +993,12 @@ function hideStr($string, $bengin = 0, $len = 4, $type = 0, $glue = "@")
             break;
         case 2:
             $array = explode($glue, $string);
-            $array[0] = hideStr($array[0], $bengin, $len, 1);
+            $array[0] = hide_str($array[0], $bengin, $len, 1);
             $string = implode($glue, $array);
             break;
         case 3:
             $array = explode($glue, $string);
-            $array[1] = hideStr($array[1], $bengin, $len, 0);
+            $array[1] = hide_str($array[1], $bengin, $len, 0);
             $string = implode($glue, $array);
             break;
         case 4:

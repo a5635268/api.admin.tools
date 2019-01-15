@@ -13,15 +13,15 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '127.0.0.1',
+    'hostname'        => Env::get('database.hostname', '172.28.3.157'),
     // 数据库名
-    'database'        => 'longya',
+    'database'        => Env::get('database.basename', 'loongcent_bbs'),
     // 用户名
-    'username'        => 'root',
+    'username'        =>  Env::get('database.username', 'root'),
     // 密码
-    'password'        => '123456',
+    'password'        => Env::get('database.password', 'MySQL123'),
     // 端口
-    'hostport'        => '3306',
+    'hostport'        => Env::get('database.hostport', '3306'),
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数

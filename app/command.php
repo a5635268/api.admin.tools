@@ -12,9 +12,9 @@
 // 命令都是可以自动注册的，此处只是为了重构原生命令才特别指定的
 
 return [
-    'app\common\Command\create\Controller' ,
-    'app\common\Command\create\Command' ,
-    'app\common\Command\create\Model' ,
-    'app\common\Command\create\Validate' ,
-    'app\common\Command\create\Middleware' ,
+    'app\\common\\command\\create\\Controller' ,
+    'app\\common\\command\\create\\Command' ,
+    'app\\common\\command\\create\\Model' ,
+    'app\\common\\command\\create\\Validate' ,
+    'app\\common\\command\\create\\Middleware' ,
 ];

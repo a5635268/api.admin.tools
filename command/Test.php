@@ -10,8 +10,8 @@ use libs\Log;
 
 use app\index\model\Game;
 
-
-class Test extends Base
+// extends Base
+class Test
 {
     protected function configure()
     {
@@ -28,7 +28,6 @@ class Test extends Base
             //->addArgument('array', Argument::IS_ARRAY, " argument::is_array")
             ->setDescription('用于测试');
     }
-
 
     protected function execute(Input $input , Output $output)
     {
@@ -55,8 +54,4 @@ class Test extends Base
         $r = $game->limit(2)
             ->cache(true)->select();
     }
-
-
-
-
 }

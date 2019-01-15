@@ -19,19 +19,3 @@ Route::get('/', function () {
 
 // 测试
 Route::rule('test','publics/test');
-
-Route::rule('sendEmail','publics/sendEmail');
-Route::rule('test2','publics/test2');
-Route::rule('upload','publics/upload');
-
-// 路由分组
-$routeTest = [
-    ':id' => 'index/Route/index',
-    ':name' => 'index/Route/index',
-    'create' => 'index/Route/create',
-];
-
-// 中间件指定
-Route::group('route',$routeTest)
-    ->pattern(['id' => '\d+', 'name' => '\w+']);
-//    ->middleware(['validate']);

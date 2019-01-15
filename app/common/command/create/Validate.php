@@ -9,7 +9,7 @@
 // | Author: 刘志淳 <chun@engineer.com>
 // +----------------------------------------------------------------------
 
-namespace app\common\Command\create;
+namespace app\common\command\create;
 
 
 class Validate extends create

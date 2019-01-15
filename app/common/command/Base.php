@@ -1,5 +1,5 @@
 <?php
-namespace app\common\Command;
+namespace app\common\command;
 
 use think\console\Command;
 use think\console\Input;

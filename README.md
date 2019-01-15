@@ -24,7 +24,7 @@ XGservice - 基于TP5的快速api构建
 - [x] `ResponsData`优化，以及`facade`静态调用与`traits`继承增加
 - [x] 基于`symfony/var-dumper`的`dd`,`d`打印调试函数封装: 多参数打印，track打印(加`[]`退出)，json打印，
 - [x] GRPC封装与service方法封装
-- [ ] rabbitMQ客户端与服务端封装
+- [x] rabbitMQ客户端与服务端封装
 - [ ] 自定义TP日志适配器
     - [x] 可多参数形式传入
     - [x] 增加日志警报器，error级别日志自动发邮件通知

@@ -25,7 +25,10 @@
         "grpc/grpc": "^v1.3.0",
         "google/protobuf": "^v3.3.0",
         "swiftmailer/swiftmailer": "v6.1.3",
-        "aliyuncs/oss-sdk-php": "^2.3"
+        "aliyuncs/oss-sdk-php": "^2.3",
+        "topthink/think-worker": "^2.0",
+        "workerman/gateway-worker": "^3.0",
+        "php-amqplib/php-amqplib": "2.7"
     },
     "autoload": {
         "psr-4": {

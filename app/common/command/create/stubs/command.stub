@@ -2,7 +2,7 @@
 
 namespace {%namespace%};
 
-use app\common\Command\Base;
+use app\common\command\Base;
 use think\console\Input;
 use think\console\Output;
 use think\console\input\Argument;

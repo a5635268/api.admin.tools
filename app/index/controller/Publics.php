@@ -12,6 +12,6 @@ class Publics extends Base
 
     public function test()
     {
-
+        echo 2222;die;
     }
 }

@@ -30,6 +30,26 @@ class Log {
      */
     public static function __callStatic($method, $args = [])
     {
+        if(config('log.type') == 'seaslog'){
+            $request = app('request');
+            $info = [];
+            if($method !== 'info'){
+                $info = [
+                    'method'    => $request->method(),
+                    'uri'       => $request->url(),
+                    'ca' => $request->controller() . '/' . $request->action(),
+                ];
+            }
+            if($info){
+                $args = [
+                    'sys' => $info,
+                    'msg' => $args
+                ];
+            }
+             $args = json_encode($args, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        }
         return TPlog::$method($args);
     }
+
+
 }

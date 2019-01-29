@@ -14,7 +14,11 @@
 // +----------------------------------------------------------------------
 return [
     // 日志记录方式，内置 file socket 支持扩展
-    'type'        => 'File',
+    'type'        => 'seaslog',
+    // 设置logger名称
+    'logger' => 'seaslog',
+    // 开启json日志的记录
+    'json' => false,
     // 日志保存目录
     'path'        => '',
     // 日志记录级别
@@ -28,8 +32,6 @@ return [
     'max_files'   => 0,
     // 日志授权key,满足其条件才记录日志 Log::key(Request::ip());
     'allow_key' => [],
-    // 开启json日志的记录
-    'json' => false,
     // 是否关闭日志写入
     'close'       => false,
 ];

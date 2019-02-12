@@ -19,6 +19,7 @@ use think\facade\Log as TPlog;
  * @method void debug(mixed $message, array $context = []) static 记录debug信息
  * @method void sql(mixed $message, array $context = []) static 记录sql信息
  * @package libs
+ * Log::info('日志title',__METHOD__,__LINE__,'haha');
  */
 class Log {
 
@@ -30,26 +31,38 @@ class Log {
      */
     public static function __callStatic($method, $args = [])
     {
-        if(config('log.type') == 'seaslog'){
-            $request = app('request');
-            $info = [];
-            if($method !== 'info'){
-                $info = [
-                    'method'    => $request->method(),
-                    'uri'       => $request->url(),
-                    'ca' => $request->controller() . '/' . $request->action(),
-                ];
-            }
-            if($info){
-                $args = [
-                    'sys' => $info,
-                    'msg' => $args
-                ];
-            }
-             $args = json_encode($args, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        // 以高性能日志收集组件seaslog为最优先；
+        if(extension_loaded('SeasLog')){
+            return self::seasLog($method, $args);
         }
         return TPlog::$method($args);
     }
 
+    private static function seasLog($method, $args){
+        $request = app('request');
+        $config = config('log.');
+        if (empty($config['path'])) {
+            $config['path'] = app()->getRuntimePath() . 'log' . DIRECTORY_SEPARATOR;
+        }
 
+        \SeasLog::setBasePath($config['path']);
+        \SeasLog::setLogger('seasLog');
+
+        $info = [
+            'method'    => $request->method(),
+            'uri'       => $request->url(),
+            'ip'    => $request->ip(),
+            'c/a' => $request->controller() . '/' . $request->action(),
+        ];
+        if($config['append_info']){
+            $args = [
+                '_sys' => $info,
+                '_msg' => $args
+            ];
+        }
+        $args = json_encode($args, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        \SeasLog::log($method,$args);
+        // 如果为true的话，马上写入；
+        config('app.app_debug') && \SeasLog::flushBuffer();
+    }
 }

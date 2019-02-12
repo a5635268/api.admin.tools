@@ -14,15 +14,17 @@
 // +----------------------------------------------------------------------
 return [
     // 日志记录方式，内置 file socket 支持扩展
-    'type'        => 'seaslog',
+    'type'        => 'file',
     // 设置logger名称
-    'logger' => 'seaslog',
+    'logger' => 'default',
     // 开启json日志的记录
     'json' => false,
     // 日志保存目录
     'path'        => '',
     // 日志记录级别
     'level'       => [],
+    // 是否追加请求日志
+    'append_info' => true,
     // 单文件日志写入
     'single'      => false,
     // 独立日志级别: V5.1.17+版本开始

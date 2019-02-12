@@ -50,8 +50,6 @@ class Test
 
     public function test()
     {
-        $game = new  Game();
-        $r = $game->limit(2)
-            ->cache(true)->select();
+
     }
 }

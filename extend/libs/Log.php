@@ -54,13 +54,18 @@ class Log {
             'ip'    => $request->ip(),
             'c/a' => $request->controller() . '/' . $request->action(),
         ];
-        if($config['append_info']){
+        if($config['append_info'] || $method == 'error'){
             $args = [
                 '_sys' => $info,
                 '_msg' => $args
             ];
         }
         $args = json_encode($args, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        if($method == 'error'){
+            // todo: 写入队列，异步报警
+        }
+
         \SeasLog::log($method,$args);
         // 如果为true的话，马上写入；
         config('app.app_debug') && \SeasLog::flushBuffer();

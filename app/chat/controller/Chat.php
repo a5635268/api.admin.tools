@@ -40,7 +40,6 @@ class Chat extends Start
         $clientId = 2222;
         $message = 'hahahaha';
 
-
         // 推送出去
         $data = [
             'uid' => $uid,

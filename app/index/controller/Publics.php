@@ -13,6 +13,6 @@ class Publics extends Base
 
     public function test()
     {
-        Log::info('test');
+        return $this->request->host();
     }
 }

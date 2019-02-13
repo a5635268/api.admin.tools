@@ -39,7 +39,6 @@ class Log {
     }
 
     private static function seasLog($method, $args){
-        $request = app('request');
         $config = config('log.');
         if (empty($config['path'])) {
             $config['path'] = app()->getRuntimePath() . 'log' . DIRECTORY_SEPARATOR;
@@ -48,26 +47,43 @@ class Log {
         \SeasLog::setBasePath($config['path']);
         \SeasLog::setLogger('seasLog');
 
-        $info = [
-            'method'    => $request->method(),
-            'uri'       => $request->url(),
-            'ip'    => $request->ip(),
-            'c/a' => $request->controller() . '/' . $request->action(),
-        ];
         if($config['append_info'] || $method == 'error'){
             $args = [
-                '_sys' => $info,
+                '_sys' => self::getSysLog(),
                 '_msg' => $args
             ];
         }
         $args = json_encode($args, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
         if($method == 'error'){
-            // todo: 写入队列，异步报警
+            // todo: 写入队列，异步报警，或者此处下个钩子吧
         }
 
         \SeasLog::log($method,$args);
         // 如果为true的话，马上写入；
         config('app.app_debug') && \SeasLog::flushBuffer();
+    }
+
+    /**
+     * 追加调试日志
+     * @return array
+     */
+    private static function getSysLog()
+    {
+        $request = app('request');
+        $runtime = round(microtime(true) - app()->getBeginTime(), 10);
+        $reqs    = $runtime > 0 ? number_format(1 / $runtime, 2) : '∞';
+        $memory_use = number_format((memory_get_usage() -  app()->getBeginMem()) / 1024, 2);
+        $info = [
+            'method'    => $request->method(),
+            'uri'       => $request->url(),
+            'ip'    => $request->ip(),
+            'c/a' => $request->controller() . '/' . $request->action(),
+            'runtime' => number_format($runtime, 6) . 's',
+            'reqs'    => $reqs . 'req/s',
+            'memory'  => $memory_use . 'kb',
+            'file'    => count(get_included_files()),
+        ];
+        return $info;
     }
 }

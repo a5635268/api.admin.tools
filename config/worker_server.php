@@ -27,30 +27,4 @@ return [
     'count'          => 4,
     'daemonize'      => false,
     'pidFile'        => Env::get('runtime_path') . 'worker.pid',
-
-    // 支持事件回调
-    // onWorkerStart
-    'onWorkerStart'  => function ($worker) {
-
-    },
-    // onWorkerReload
-    'onWorkerReload' => function ($worker) {
-
-    },
-    // onConnect
-    'onConnect'      => function ($connection) {
-
-    },
-    // onMessage
-    'onMessage'      => function ($connection, $data) {
-        $connection->send('receive success');
-    },
-    // onClose
-    'onClose'        => function ($connection) {
-
-    },
-    // onError
-    'onError'        => function ($connection, $code, $msg) {
-        echo "error [ $code ] $msg\n";
-    },
 ];

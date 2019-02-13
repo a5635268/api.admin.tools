@@ -8,10 +8,9 @@ use think\console\input\Argument;
 use think\console\input\Option;
 use libs\Log;
 
-use app\index\model\Game;
 
 // extends Base
-class Test
+class Test extends Base
 {
     protected function configure()
     {
@@ -50,6 +49,9 @@ class Test
 
     public function test()
     {
+        $ciphers             = openssl_get_cipher_methods();
+        dd($ciphers);
+        echo service('user')->encryptPass5('123456');
 
     }
 }

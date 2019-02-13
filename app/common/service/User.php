@@ -16,13 +16,15 @@ class User
 
     const SERVICE_NAME = 'Userservice';
     const APP_ID = 'xg_app';
-    const SECRETKEY = 'oCwnF1r1SyHvUFzutFEC0AbwrTkEx17s';
+//    const SECRETKEY = 'oCwnF1r1SyHvUFzutFEC0AbwrTkEx17s';
+    const SECRETKEY = '12345678';
+
 
     public function __construct()
     {
-        $this->client = ClientFactory::createClient(self::SERVICE_NAME);
-        $this->request = new Request();
-        $this->request->setAppId(self::APP_ID);
+//        $this->client = ClientFactory::createClient(self::SERVICE_NAME);
+//        $this->request = new Request();
+//        $this->request->setAppId(self::APP_ID);
     }
 
     public function setBoby($body)
@@ -54,7 +56,7 @@ class User
      * @param $input
      * @return string
      */
-    private function encryptPass5($input) {
+    public function encryptPass5($input) {
         $size = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
         $input = $this->pkcs5Pad($input, $size);
         $td = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_ECB, '');
@@ -83,7 +85,7 @@ class User
      * @param $sStr
      * @return bool|string
      */
-    private  function decryptPass5($sStr) {
+    public  function decryptPass5($sStr) {
         $iv = '';
         $decrypted= mcrypt_decrypt(
             MCRYPT_RIJNDAEL_128,

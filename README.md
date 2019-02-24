@@ -31,7 +31,7 @@ XGservice - 基于TP5的快速api构建
     - [x] 接入seasLog驱动
 - [x] 基于guzzleHttp的client封装
 - [x] workerman示例封装 `1/3`
-- [ ] 文件上传封装（本地上传，OSS上传） 
+- [ ] 文件上传封装（本地上传，OSS上传）
 - [ ] 邮件发送封装  
 - [ ] excel，csv 导入导出封装  
 - [ ] SNS第三方登录封装 

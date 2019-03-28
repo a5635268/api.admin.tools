@@ -12,7 +12,7 @@ use libs\Log;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
-class Team extends Base
+class RabbitMq extends Base
 {
     private $config;
     private $queueName = 'team-queue';

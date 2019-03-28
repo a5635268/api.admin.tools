@@ -2,13 +2,7 @@
 
 namespace libs;
 
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Client;
-use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Promise;
-use think\facade\Debug;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Pool;
 
 /**
  * 基于GuzzleHttp的请求工厂， 待完成异步，并发，文件传输等高级属性

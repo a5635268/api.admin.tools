@@ -13,7 +13,6 @@ class Publics extends Base
 
     public function test()
     {
-        echo 2222;die;
-        Log::info('hahahaha');
+        return $this->returnRight($_ENV);
     }
 }

@@ -3,6 +3,7 @@ namespace app\index\controller;
 
 use app\common\controller\Base;
 use app\index\model\Game;
+use libs\Log;
 
 class Index extends Base
 {
@@ -22,8 +23,7 @@ class Index extends Base
 
     public function hello()
     {
-        dump($this->app->request);
-        die;
+
     }
 
     public function test()

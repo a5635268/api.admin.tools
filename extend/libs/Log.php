@@ -55,6 +55,7 @@ class Log {
         }
         $args = json_encode($args, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
+
         if($method == 'error'){
             // todo: 写入队列，异步报警，或者此处下个钩子吧
         }

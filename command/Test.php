@@ -7,7 +7,7 @@ use think\console\Output;
 use think\console\input\Argument;
 use think\console\input\Option;
 use libs\Log;
-use libs\OpenSSLHelper;
+use app\common\model\Game;
 
 
 // extends Base
@@ -49,32 +49,12 @@ class Test extends Base
 
     public function test()
     {
-        return $this->test1();
+        $game = Game::get(8);
+        $game->game_name = "崩坏4";
+        $game->update_time = NOW;
+        $game->save();
 
-        dd($result);
-    }
-
-    public function test1()
-    {
-        $url = "http://jq.shanghai12301.com/LYJWebService/PassengerInfo/PassengerInfoWebService.asmx?wsdl";
-        try {
-            $client = new \SoapClient($url);
-            $parm = [
-                'username' => 'ctgc',
-                'password' => 'ctgc123',
-                'num'   => '2000',
-                'ssd'   => '舒适',
-                'time' => '2019-02-21 15:37:14'
-            ];
-            $parameters = ['UpdatePassengerInfo' => $parm];
-            $result = $client->__soapCall(
-                'UpdatePassengerInfo' , $parameters
-            );
-            dd($result);
-            $simpleresult = $result->SumResult;
-            var_dump($result);
-        } catch (\SOAPFault $e) {
-            print_r($e);
-        }
+        $game = Game::get(8);
+        dd($game);
     }
 }

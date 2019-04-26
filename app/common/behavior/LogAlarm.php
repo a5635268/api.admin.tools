@@ -4,7 +4,6 @@ namespace app\common\behavior;
 
 class LogAlarm
 {
-
     #todo: 后续要写进rabbitMq
     public function run($params)
     {
@@ -16,5 +15,4 @@ class LogAlarm
             // mail('admin@mail.com' , '日志报警' , implode(' ' , $message));
         }
     }
-
 }

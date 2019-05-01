@@ -1,7 +1,7 @@
 ![](https://images.gitee.com/uploads/images/2019/0129/173855_7a94eba7_60244.png) 
 
-XGservice - 基于TP5的快速api构建
-=========================
+XGservice - 基于TP5的快速api构建,用于学习和试验
+=================================
 
 - [x] 目录结构调整
     - [x] 增加常量定义文件`constant.php`
@@ -32,7 +32,10 @@ XGservice - 基于TP5的快速api构建
 - [x] 基于workerman的聊天示例
 - [x] 基于elasticsearch的搜索引擎示例
 - [x] swoole各项功能示例
+    - [x] mysql线程池示例
+    - [x] swl命令行试验各项功能
 - [x] webservice示列
+- [ ] 升级到thinkphp6.0
 - [ ] 基于swoole协程http客户端`swlib/sabe`,`jaeger/querylist`的爬虫示例
 - [ ] 文件上传封装（本地上传，OSS上传）
 - [ ] 邮件发送封装  

@@ -5,6 +5,7 @@ use app\common\controller\Base;
 use libs\Log;
 
 use Swoole\Client as SwooleClient;
+use think\Db;
 
 class Publics extends Base
 {
@@ -46,8 +47,7 @@ class Publics extends Base
 
     public function test()
     {
-        Log::info('haha','heihei',__METHOD__,__FILE__);
-        return __FILE__;
+        phpinfo();
     }
 
     private function log()

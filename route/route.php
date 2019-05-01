@@ -13,9 +13,7 @@
 // Route::miss('publics/miss');
 
 // 主页路由
-Route::get('/', function () {
-    return 'hello,ThinkPHP5!';
-});
+Route::get('/', 'publics/test');
 
 // 测试
 Route::rule('test','publics/test');

@@ -12,7 +12,6 @@ XGservice - 基于TP5的快速api构建
 - [x] 自定义命令行
     - [x] 自定义创建`Model`,`Validate`,`Controller`,`Command`
     - [x] 更改默认中间件位置，并自定义创建`middleware`
-    - [ ] 自定义命令`build`,一键创建模块
 - [x] 定制化redis类
     - [x] 新增`__call`,`redisLock`,`getInstance`
     - [x] 新增`CachekeyMap`静态类，规范化并批量管理缓存key
@@ -30,15 +29,15 @@ XGservice - 基于TP5的快速api构建
     - [x] 增加日志警报器，error级别日志自动发邮件通知
     - [x] 接入seasLog驱动
 - [x] 基于guzzleHttp的client封装
-- [x] workerman示例封装 `1/3`
+- [x] 基于workerman的聊天示例
+- [x] 基于elasticsearch的搜索引擎示例
+- [x] swoole各项功能示例
+- [x] webservice示列
+- [ ] 基于swoole协程http客户端`swlib/sabe`,`jaeger/querylist`的爬虫示例
 - [ ] 文件上传封装（本地上传，OSS上传）
 - [ ] 邮件发送封装  
 - [ ] excel，csv 导入导出封装  
-- [ ] SNS第三方登录封装 
-- [ ] PHPtask任务管理封装 
-- [ ] 微信常用功能封装  
-- [ ] 基于elasticsearch的搜索引擎封装
-- [ ] PHP多进程爬虫封装
-- [ ] swoole示例封装
-- [ ] 支付示例封装
+- [ ] SNS第三方登录封装
+- [ ] 微信常用功能封装
+- [ ] 微信与支付宝支付示例
 - [ ] 接口文档自动生成

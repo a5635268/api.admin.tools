@@ -15,21 +15,26 @@ use Swoole\Client as SwooleClient;
 use Swoole\Timer as SwooleTimer;
 use Swoole\Coroutine as co;
 use Swoole\Coroutine\Channel as chan;
+use think\Db;
 use think\facade\Debug;
 
 class Swoole extends Base
 {
     protected $output;
+    protected $input;
+
     protected function configure()
     {
         $this->setName('swl')
             ->addArgument('func', Argument::OPTIONAL, "本命令行的方法名","test")
+            ->addOption('port', 'p', Option::VALUE_OPTIONAL, '端口，默认9501',9501)
             ->setDescription('this is a description');
     }
 
     protected function execute(Input $input , Output $output)
     {
         $this->output = $output;
+        $this->input = $input;
         $func = $input->getArgument('func');
         try {
             if(!method_exists($this,$func)){
@@ -133,6 +138,13 @@ class Swoole extends Base
                 'worker_num'  => 8
             ]
         );
+
+        // 增加子服务端口监听
+        $subPort = $serv->addListener('0.0.0.0',9588,SWOOLE_SOCK_TCP);
+        $subPort->on('receive',function (SwooleServer $serv, int $fd, int $reactor_id, string $data){
+            // 此处的回调专门用于监听上面9588
+            $serv->send($fd, "hi！{$reactor_id} this is sub port: ".$data);
+        });
         //启动服务器
         $serv->start();
     }
@@ -167,9 +179,6 @@ class Swoole extends Base
     {
         $http = new HttpServer("0.0.0.0", 9502);
         $http->on('request', function ($request, $response) {
-            $response->end("<h1>Hello Swoole. #".rand(1000, 9999)."</h1>");
-        });
-        $http->on('request', function ($request, $response) {
             $response->end("<h1>Hello Swoole2. #".rand(1000, 9999)."</h1>");
         });
         $http->start();
@@ -202,7 +211,8 @@ class Swoole extends Base
 
         // 连接到服务器
         // bool $swoole_client->connect(string $host, int $port, float $timeout = 0.5, int $flag = 0)
-        if (!$client->connect('127.0.0.1', 9501, 0.5))
+        $port = $this->input->getOption('port');
+        if (!$client->connect('127.0.0.1', $port, 0.5))
         {
             die("connect failed.");
         }
@@ -360,22 +370,26 @@ class Swoole extends Base
         $server->start();
     }
 
+
     private function processPool()
     {
         // 设置10个工作进程
-        $workerNum = 10;
+        $workerNum = 1;
         $pool = new \Swoole\Process\Pool($workerNum);
 
+        // 配置事件回调
         $pool->on("WorkerStart", function ($pool, $workerId) {
-            // 得到Process对象，可以使用Process的方法
+            // 得到Process对象，可以使用Process对象的方法
             $process = $pool->getProcess();
-            $process->exec("/bin/sh", ["ls", '-l']);
+            $process->exec("/bin/sh", ['-c', 'ls -l']);
+            $process->exit();
         });
 
         $pool->on("WorkerStop", function ($pool, $workerId) {
             echo "Worker#{$workerId} is stopped\n";
         });
 
+        // 启动工作进程
         $pool->start();
     }
 
@@ -398,5 +412,114 @@ class Swoole extends Base
             $response->end($table->get('$i','i'));
         });
         $server->start();
+    }
+
+    private function signal()
+    {
+        // 监听SIGTERM信号（停止）
+        // 当前进程被杀掉就触发
+        \Swoole\Process::signal(SIGTERM, function($signo) {
+            echo "shutdown.";
+        });
+    }
+
+
+    private function channle()
+    {
+        $chan = new chan(2);
+
+        # 消费者协程
+        go (function () use ($chan) {
+            $result = [];
+            for ($i = 0; $i < 2; $i++)
+            {
+                // pop: 从通道中读取内容，如果为空，它会进入等待状态，有数据时自动恢复。
+                // 消费数据后，队列可写入新的数据，自动按顺序唤醒一个生产者协程。
+                // 额，PHP居然可以这样push数组元素到新数组中，以前都没注意。
+                $result += $chan->pop(5);
+            }
+            var_dump($result);
+        });
+
+        go(function () use ($chan) {
+            $cli = new \Swoole\Coroutine\Http\Client('www.qq.com', 80);
+            $cli->set(['timeout' => 10]);
+            $cli->setHeaders([
+                                 'Host' => "www.qq.com",
+                                 "User-Agent" => 'Chrome/49.0.2587.3',
+                                 'Accept' => 'text/html,application/xhtml+xml,application/xml',
+                                 'Accept-Encoding' => 'gzip',
+                             ]);
+            $ret = $cli->get('/');
+            // $cli->body 响应内容过大，这里用 Http 状态码作为测试
+            // push：向通道中写入内容，如果已满，它会进入等待状态，有空间时自动恢复
+            $chan->push(['www.qq.com' => $cli->statusCode]);
+        });
+
+        # 生产者协程2
+        go(function () use ($chan) {
+            $cli = new \Swoole\Coroutine\Http\Client('www.163.com', 80);
+            $cli->set(['timeout' => 10]);
+            $cli->setHeaders([
+                                 'Host' => "www.163.com",
+                                 "User-Agent" => 'Chrome/49.0.2587.3',
+                                 'Accept' => 'text/html,application/xhtml+xml,application/xml',
+                                 'Accept-Encoding' => 'gzip',
+                             ]);
+            $ret = $cli->get('/');
+            // $cli->body 响应内容过大，这里用 Http 状态码作为测试
+            $chan->push(['www.163.com' => $cli->statusCode]);
+        });
+    }
+
+    private function goPdo()
+    {
+        $res = [];
+        # 耗时20秒
+        for ($i = 0;$i < 20;$i ++) {
+            go(
+                function () use (&$res){
+                    Db::table('tb_game')->query('select sleep(1)');
+                    $res[] = Db::table('tb_game')->query('select * from tb_game order by rand() limit 1');
+                }
+            );
+        }
+        var_dump($res);
+    }
+
+    private function goCoMysql()
+    {
+
+        $chan = new chan(20);
+        for ($i = 0;$i < 20;$i ++) {
+            go(
+                function () use($chan){
+                    $swoole_mysql = new \Swoole\Coroutine\MySQL();
+                    $swoole_mysql->connect(
+                        [
+                            'host'     => '127.0.0.1' ,
+                            'port'     => 3306 ,
+                            'user'     => 'root' ,
+                            'password' => '123456' ,
+                            'database' => 'test' ,
+                        ]
+                    );
+                    // 底层会触发进行协程切换，转到后台执行，然后跳到go之外的代码
+                    $swoole_mysql->query('select sleep(1)');
+                    $res = $swoole_mysql->query('select * from tb_game order by rand() limit 1');
+                    $chan->push($res);
+                }
+            );
+        }
+        go(
+            function () use($chan){
+                $res = [];
+                for ($i = 0;$i < 20;$i ++){
+                    //  底层会触发进行协程切换，转到后台执行，跳到go之外的代码
+                    $res[] = $chan->pop();
+                }
+                var_dump($res);
+            }
+        );
     }
 }

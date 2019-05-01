@@ -16,9 +16,9 @@ class Test extends Base
     protected function configure()
     {
         $this->setName('test')
-            ->addOption('test', 't', Option::VALUE_NONE, 'this is a value_none option')
-            ->addOption('required', null, Option::VALUE_REQUIRED, 'this is a value_required option')
-            ->addOption('optional', null, Option::VALUE_OPTIONAL, 'this is a value_optional option')
+            ->addOption('test', 't', Option::VALUE_NONE, '--test val 只判断是否有这个选项，不取val出来')
+            ->addOption('required', null, Option::VALUE_REQUIRED, '--required 以后一定要填值')
+            ->addOption('optional', null, Option::VALUE_OPTIONAL, '--optional 该值可填可不填，填的话能取出该值出来','defaultval')
             // VALUE_IS_ARRAY 暂未支持该方法
             // ->addOption('isarray', null, Option::VALUE_IS_ARRAY, 'this is a value_is_array option')
             // 必选参数一定要在可选参数之前

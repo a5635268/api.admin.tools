@@ -34,6 +34,8 @@ return [
     'timer'                 => true,//是否开启系统定时器
     'interval'              => 500,//系统定时器 时间间隔
     'task_worker_num'       => 4,//swoole 任务工作进程数量
+    'worker_num' => 2,
+    'reactor_num' => 2,
 
     // 队列消费配置
     'queue_type'=>'task',//task or process

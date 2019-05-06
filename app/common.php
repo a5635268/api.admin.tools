@@ -1068,12 +1068,3 @@ function getTree($arr, $pid = 0, $level = 0,$pk='comments_id')
     }
     return $list;
 }
-
-/**
- * 用于测试的函数
- * @param int $second
- */
-function delayTest($second = 3)
-{
-    sleep($second);
-}

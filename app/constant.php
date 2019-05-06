@@ -4,6 +4,9 @@
  * 本文件用于各种常量定义
  */
 
+// 指定Yaconf使用的独立配置文件
+\think\facade\Config::setYaconf('xgservice');
+
 //过滤错误
 error_reporting(E_ERROR | E_PARSE);
 

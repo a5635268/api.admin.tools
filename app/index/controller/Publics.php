@@ -47,7 +47,7 @@ class Publics extends Base
 
     public function test()
     {
-        phpinfo();
+        return $this->request->param();
     }
 
     private function log()

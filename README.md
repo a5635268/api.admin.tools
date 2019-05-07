@@ -35,6 +35,7 @@ XGservice - 基于TP5的快速api构建,用于学习和试验
     - [x] mysql线程池示例
     - [x] swl命令行试验swoole各项功能
     - [x] saber测试示例
+    - [x] 协程客户端示例
 - [x] webservice示列
 - [ ] 升级到thinkphp6.0
 - [ ] 基于swoole协程http客户端`swlib/sabe`,`jaeger/querylist`的爬虫示例

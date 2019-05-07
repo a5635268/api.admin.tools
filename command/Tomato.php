@@ -15,7 +15,7 @@ class Tomato extends Base
     protected $startDate = null;
     protected $endDate = null;
     protected $offset = 0;
-    protected $limit = 10;
+    protected $limit = 100;
     protected $chan = null;
     protected $isManual = true;
 
@@ -52,12 +52,18 @@ class Tomato extends Base
         }
     }
 
+    #todo: 参考thinkphp/library/think/console/command/RouteList.php输出统计数据
+    // 统计数据：
+    protected function out()
+    {
+
+    }
 
     protected function main()
     {
         // 用于计算当日番茄总共用了多少时间，大番茄几个，小番茄几个，非家务番茄几个。
         // 还可以计算一周的运动番茄有几个。随便测试一下tp的表格输出。
-        $total = 2;
+        $total = 5;
         $this->chan = new chan($total);
         foreach ([true , false] as $isManual) {
             $this->isManual = $isManual;
@@ -65,12 +71,11 @@ class Tomato extends Base
                 go([$this , 'getPomos']);
             }
         }
-        while ($pomos = $this->chan->pop(0.5)){
+        while ($pomos = $this->chan->pop(3)){
             $func = function () use($pomos){
                 foreach ($pomos as $item){
                     $this->insert($item);
                 }
-                print_r($this->chan->stats());
             };
             go($func);
         }
@@ -97,11 +102,11 @@ class Tomato extends Base
             $stmt = $swooleMysql->prepare($sql);
              if ($stmt == false)
              {
-                 return var_dump($swooleMysql->errno, $swooleMysql->error);
+                 //return var_dump($swooleMysql->errno, $swooleMysql->error);
              }
             $ret2 = $stmt->execute($data);
             if(false == $ret2){
-                return var_dump($swooleMysql->errno, $swooleMysql->error);
+                //return var_dump($swooleMysql->errno, $swooleMysql->error);
             }
         };
         go($insertFunc);
@@ -136,6 +141,5 @@ class Tomato extends Base
         }catch (\Throwable $e){
             $this->output->error($e->getMessage());
         }
-
     }
 }

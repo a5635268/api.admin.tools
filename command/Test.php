@@ -49,12 +49,6 @@ class Test extends Base
 
     public function test()
     {
-        $game = Game::get(8);
-        $game->game_name = "崩坏4";
-        $game->update_time = NOW;
-        $game->save();
-
-        $game = Game::get(8);
-        dd($game);
+        \libs\Test::getInstance('zhou',25)->funck('a','b','c');
     }
 }

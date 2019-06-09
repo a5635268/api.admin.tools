@@ -1,14 +1,13 @@
 <?php
 namespace command;
 
-use app\common\Command\Base;
+use app\common\command\Base;
 use think\console\Input;
 use think\console\Output;
 use think\console\input\Argument;
 use think\console\input\Option;
 use libs\Log;
-use app\common\model\Game;
-
+use think\facade\Debug;
 
 // extends Base
 class Test extends Base
@@ -31,19 +30,20 @@ class Test extends Base
 
     protected function execute(Input $input , Output $output)
     {
-        return $this->test();
-        $arguments =  array_filter($input->getArguments(true));
-        if (empty($arguments)) {
-            // return $output->error('please enter $arguments ^_^');
-        }
-        $options = array_filter($input->getOptions(true));
-        if (empty($options)) {
-            return $output->error('please enter options ^_^');
-        }
+        $this->output = $output;
+        $this->input = $input;
+        $func = $input->getArgument('func');
         try {
-            $input->getOption('test') && $this->test();
+            if(!method_exists($this,$func)){
+                return $output->error("没有<" . $func . ">方法");
+            }
+            Debug::remark('begin');
+            $this->$func();
+            Debug::remark('end');
+            $result = PHP_EOL . Debug::getRangeTime('begin','end').'s';
+            $this->output->info($result) ;
         } catch (Exception $ex) {
-            return Log::err(__METHOD__ , $options , $ex->getMessage());
+            d($ex->getMessage());
         }
     }
 

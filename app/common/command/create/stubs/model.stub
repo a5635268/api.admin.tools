@@ -33,23 +33,20 @@ class {%className%} extends Base
 
     public function add($data)
     {
-        Log::info(__METHOD__ . ':' . __LINE__ , 'add in parameter' , $data);
-        $this->validateData($data , 'validate.add');
+        Log::info('add in parameter' , $data);
         self::create($data , true);
         return $this->returnSucc('添加成功');
     }
 
     public function edit($data)
     {
-        Log::info(__METHOD__ . __LINE__ , 'add in parameter' , $data);
-        $this->validateData($data , 'validate.edit');
+        Log::info('edit in parameter' , $data);
         self::create($data , true);
         return $this->returnSucc('编辑成功');
     }
 
     public function changeStatus($data , $status)
     {
-        $this->validateData($data , 'validate.change');
         $data['status'] = $status;
         $this->allowField(true)->isUpdate(true)->save($data);
         return $this->returnRight();
@@ -57,7 +54,6 @@ class {%className%} extends Base
 
     public function del($data)
     {
-        $this->validateData($data , 'validate.del');
         self::destroy(1);
         return $this->returnRight();
     }

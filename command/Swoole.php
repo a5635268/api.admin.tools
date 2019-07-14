@@ -45,10 +45,10 @@ class Swoole extends Base
             Debug::remark('end');
             $result = PHP_EOL . Debug::getRangeTime('begin','end').'s';
             $this->output->info($result) ;
-
         } catch (Exception $ex) {
             d($ex->getMessage());
         }
+
     }
 
     private function test()

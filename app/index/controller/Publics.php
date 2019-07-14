@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\common\controller\Base;
+use libs\CacheKeyMap;
 use libs\Log;
 
 use Swoole\Client as SwooleClient;
@@ -47,7 +48,7 @@ class Publics extends Base
 
     public function test()
     {
-        return $this->request->param();
+
     }
 
     private function log()

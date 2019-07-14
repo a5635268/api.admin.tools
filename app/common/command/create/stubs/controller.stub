@@ -7,12 +7,12 @@ use \Exception;
 
 class {%className%} extends Base
 {
-    protected $game;
+    protected $model;
 
-    public function __construct(Game $game)
+    public function __construct(Model $model)
     {
         parent::__construct();
-        $this->game = $game;
+        $this->model = $model;
     }
 
     /**
@@ -35,7 +35,7 @@ class {%className%} extends Base
     public function add()
     {
         try {
-            return $this->model->add($this->postData);
+            return $this->model->add($this->params);
         } catch (Exception $ex) {
             return $this->returnException($ex);
         }
@@ -48,7 +48,7 @@ class {%className%} extends Base
     public function content()
     {
         try {
-            return $this->model->getOne($this->postData);
+            return $this->model->getOne($this->params);
         } catch (Exception $ex) {
             return $this->returnException($ex);
         }
@@ -61,7 +61,7 @@ class {%className%} extends Base
     public function edit()
     {
         try {
-            return $this->model->edit($this->postData);
+            return $this->model->edit($this->params);
         } catch (Exception $ex) {
             return $this->returnException($ex);
         }
@@ -75,7 +75,7 @@ class {%className%} extends Base
     public function delete()
     {
         try {
-            return $this->model->del($this->postData);
+            return $this->model->del($this->params);
         } catch (Exception $ex) {
             return $this->returnException($ex);
         }
@@ -85,7 +85,7 @@ class {%className%} extends Base
     public function enable()
     {
         try {
-            return $this->model->changeStatus($this->postData , 1);
+            return $this->model->changeStatus($this->params , 1);
         } catch (Exception $ex) {
             return $this->returnException($ex);
         }
@@ -95,7 +95,7 @@ class {%className%} extends Base
     public function disable()
     {
         try {
-            return $this->model->changeStatus($this->postData , 0);
+            return $this->model->changeStatus($this->params , 0);
         } catch (Exception $ex) {
             return $this->returnException($ex);
         }

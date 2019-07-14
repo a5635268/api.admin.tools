@@ -15,6 +15,7 @@ use libs\Log;
 class Base extends Controller
 {
     use ResponsDataBuild;
+    protected $params = [];
 
     //验证失败要抛出异常；
     protected $failException = true;
@@ -22,6 +23,8 @@ class Base extends Controller
     public function __construct()
     {
         parent::__construct();
+        $this->crossHeader();
+        $this->params = array_merge($this->request->param(), $this->request->route());
     }
 
     protected function validate($data , $validate , $message = [] , $batch = false , $callback = null)

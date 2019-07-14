@@ -64,7 +64,6 @@ class SnsSigCheck
         $apiSecret = $data['sign'];
         unset($data['sign']);
         krsort($data);
-        config('jwt.key','doulong');
         $key = md5(md5(json_encode($data , JSON_UNESCAPED_SLASHES)) . config('jwt.key'));
         if ($apiSecret !== $key) {
             return false;

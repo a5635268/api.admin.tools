@@ -21,7 +21,6 @@
         "zewail/think-api": "1.1.x@beta",
         "firebase/php-jwt": "^5.0",
         "symfony/var-dumper": "3.4.*",
-        "topthink/think-seaslog": "^2.0",
         "grpc/grpc": "^v1.3.0",
         "google/protobuf": "^v3.3.0",
         "swiftmailer/swiftmailer": "v6.1.3",

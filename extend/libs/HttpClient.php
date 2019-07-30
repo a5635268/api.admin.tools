@@ -13,7 +13,7 @@ class HttpClient
 {
     private $_handle;
     private static $_instance = null;
-    private $debug = 0;
+    private $debug = 1;
 
     public function __construct($options = []) {
         $config = config('http.');

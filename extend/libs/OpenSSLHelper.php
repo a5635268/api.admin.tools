@@ -138,6 +138,7 @@ class OpenSSLHelper
     dd([$data]);
 
     // 3DES加密模式:CBC(该模式是需要填充的),加密没问题，但解密会出现不可见的非法字符串preg_replace替换一下；
+    // 只有ZERO_PADDING填充的才需要特意指定一下，否则不需要特意指定
     $options = OPENSSL_ZERO_PADDING;
     $openssl = new OpenSSLHelper($key, 'DES-EDE3-CBC', $iv , $options);
     $hexStr = $openssl->encrypt($data);

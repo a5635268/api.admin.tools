@@ -31,6 +31,12 @@ class {%className%} extends Base
         return $this->returnRight($data);
     }
 
+    public function getOne()
+    {
+
+    }
+
+
     public function add($data)
     {
         Log::info('add in parameter' , $data);

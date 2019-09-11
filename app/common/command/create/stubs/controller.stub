@@ -45,7 +45,7 @@ class {%className%} extends Base
      * 显示内容
      * @return \think\Response
      */
-    public function content()
+    public function read()
     {
         try {
             return $this->model->getOne($this->params);

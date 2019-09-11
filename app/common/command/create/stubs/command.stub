@@ -16,7 +16,7 @@ class {%className%} extends Base
     {
         $this->setName('{%className%}')
             ->addOption('test', 't', Option::VALUE_NONE, 'this is a value_none option')
-            ->addArgument('func', Argument::OPTIONAL, "本命令行的方法名","test")
+            ->addArgument('func', Argument::OPTIONAL, "本命令行的方法名,默认是default","default")
             ->addOption('required', null, Option::VALUE_REQUIRED, 'this is a value_required option')
             ->addOption('optional', null, Option::VALUE_OPTIONAL, 'this is a value_optional option')
             // VALUE_IS_ARRAY 暂未支持该方法
@@ -50,12 +50,13 @@ class {%className%} extends Base
             $result = PHP_EOL . Debug::getRangeTime('begin','end').'s';
             $this->output->info($result) ;
         } catch (Exception $ex) {
-            return Log::err(__METHOD__ , $options , $ex->getMessage());
+            Log::err(__METHOD__ , $options , $ex->getMessage());
+            $this->output->error($ex->getMessage());
         }
     }
 
 
-    public function test()
+    public function default()
     {
 
 

@@ -11,8 +11,8 @@ use OSS\OssClient;
 
 class OssUpload
 {
-    static   $accessKeyId = 'LTAIpx15RUnaW95Q';   //yourAccessKeyId
-    static   $accessKeySecret  = 'S4xlW78AKECC25zXHBbseOlw0B97jJ'; //yourAccessKeySecret
+    static   $accessKeyId = '';   //yourAccessKeyId
+    static   $accessKeySecret  = ''; //yourAccessKeySecret
     static   $endpoint   = 'oss-cn-shanghai.aliyuncs.com'; // Endpoint以上海为例，其它Region请按实际情况填写。
     static   $_ossClient;
     static  $bucket;

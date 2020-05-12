@@ -1,0 +1,106 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('City_code')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-city_code" data-rule="required" class="form-control" name="row[city_code]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('City_first_py')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-city_first_py" data-rule="required" class="form-control" name="row[city_first_py]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('City_name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-city_name" data-rule="required" class="form-control" name="row[city_name]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('City_pinyin')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-city_pinyin" data-rule="required" class="form-control" name="row[city_pinyin]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('City_level')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-city_level" data-rule="required" class="form-control" name="row[city_level]" type="number" value="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Province')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-province" data-rule="required" class="form-control" name="row[province]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Province_pinyin')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-province_pinyin" data-rule="required" class="form-control" name="row[province_pinyin]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Nation')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-nation" data-rule="required" class="form-control" name="row[nation]" type="text" value="china">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Parent_city_code')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-parent_city_code" data-rule="required" class="form-control" name="row[parent_city_code]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Longitude')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-longitude" data-rule="required" class="form-control" name="row[longitude]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Latitude')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-latitude" data-rule="required" class="form-control" name="row[latitude]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Create_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-create_time" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[create_time]" type="text" value="{:date('Y-m-d H:i:s')}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Create_user_code')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-create_user_code" data-rule="required" class="form-control" name="row[create_user_code]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Is_hot')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-is_hot" data-rule="required" class="form-control" name="row[is_hot]" type="number" value="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Update_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-update_time" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[update_time]" type="text" value="{:date('Y-m-d H:i:s')}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Update_user_code')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-update_user_code" data-rule="required" class="form-control" name="row[update_user_code]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

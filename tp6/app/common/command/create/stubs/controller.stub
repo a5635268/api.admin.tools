@@ -1,0 +1,119 @@
+<?php
+declare (strict_types = 1);
+
+namespace {%namespace%};
+
+use app\common\controller\BaseController;
+use think\App;
+use \Throwable;
+
+class {%className%} extends BaseController
+{
+    protected $model;
+
+    public function __construct(App $app, Model $model)
+    {
+        parent::__construct($app);
+        $this->model = $model;
+    }
+
+    /**
+     * 列表查询
+     * GET  blog
+     * @return array
+     */
+    public function query()
+    {
+        $where = [];
+        $page = input('page/d', 1);
+        $pageSize = input('page_size/d', 20);
+        $order = null;
+        $fields = '*';
+        return $this->model->getList($where,$fields,$order,$page,$pageSize);
+    }
+
+    /**
+     * 新建
+     * POST	blog
+     * @return array
+     */
+    public function create():array
+    {
+        try {
+            return $this->model->add($this->params);
+        } catch (Throwable $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+    /**
+     * 显示内容
+     * GET	blog/:id
+     * @return array
+     */
+    public function content():array
+    {
+        try {
+            return $this->model->getOne($this->params);
+        } catch (Throwable $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+    /**
+     * 编辑
+     * PUT	blog/:id
+     * @return array
+     */
+    public function update():array
+    {
+        try {
+            return $this->model->edit($this->params);
+        } catch (Throwable $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+
+    /**
+     * 删除指定资源
+     * DELETE	blog/:id
+     * @return array
+     */
+    public function delete():array
+    {
+        try {
+            return $this->model->del($this->params);
+        } catch (Throwable $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+    /**
+     * 启用
+     * PUT	blog/:id/enable
+     * @return array
+     */
+    public function enable():array
+    {
+        try {
+            return $this->model->changeStatus($this->params , 1);
+        } catch (Throwable $ex) {
+            return $this->returnException($ex);
+        }
+    }
+
+    /**
+     * 禁用
+     * PUT	blog/:id/disable
+     * @return array
+     */
+    public function disable():array
+    {
+        try {
+            return $this->model->changeStatus($this->params , 0);
+        } catch (Throwable $ex) {
+            return $this->returnException($ex);
+        }
+    }
+}

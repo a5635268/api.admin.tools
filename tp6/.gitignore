@@ -1,0 +1,9 @@
+/.idea
+/.vscode
+/vendor
+*.log
+.env
+/_note
+*.jpg
+/.env.96
+/.env.16

@@ -4,6 +4,7 @@
 *.log
 thinkphp
 .env
+.env.16
 .DS_Store
 /runtime
 /note.php

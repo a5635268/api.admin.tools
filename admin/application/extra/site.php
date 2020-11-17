@@ -1,7 +1,7 @@
 <?php
 
 return array (
-  'name' => '爱上进后台管理',
+  'name' => '资管系统',
   'beian' => '',
   'cdnurl' => '',
   'version' => '1.0.1',

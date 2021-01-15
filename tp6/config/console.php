@@ -10,6 +10,5 @@ return [
         'create:validate' => 'app\\common\\command\\create\\Validate',
         'create:command' => 'app\\common\\command\\create\\Command',
         'test' => 'app\\command\\Test',
-        'card' => 'app\\command\\Card' ,
     ],
 ];

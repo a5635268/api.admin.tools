@@ -7,3 +7,5 @@
 *.jpg
 /.env.96
 /.env.16
+/note.md
+/test.php

@@ -365,3 +365,21 @@ if(!function_exists('Curl')){
         return $_curl;
     }
 }
+
+/**
+ * 检测是postman才打印的函数
+ * author: xiaogang.zhou@qq.com
+ * datetime: 2020/4/23 13:29
+ * @param $var
+ * @param bool $die
+ */
+function pdd($var,$die = true)
+{
+    $check =  \think\Request::instance()->header('Postman-Token');
+    if(empty($check)){
+        return ;
+    }
+    $die && dd($var);
+    d($var);
+}
+

@@ -479,4 +479,70 @@ class Backend extends Controller
         return json(['list' => $list, 'total' => $total]);
     }
 
+    protected function checkTableHeads($importHeads,$fixHeads)
+    {
+        if(empty($importHeads)){
+            $this->error('表头错误，不能为空');
+        }
+        $intersect = array_intersect($fixHeads,$importHeads);
+        $diff = array_diff($fixHeads,$intersect);
+        if(empty($diff)){
+            return true;
+        }
+        $this->error('表头错误：' . implode(' , ', $diff));
+    }
+
+    protected function resetArrayIndex($dataArray , $newIndexSource , string $delimiter = ':' , bool $unsetIndexKey = false): array
+    {
+        $resultArray = [];
+        foreach ($dataArray as $k => $v) {
+            // string格式的单key索引, 则直接赋值, 继续下一个
+            if (is_string($newIndexSource)) {
+                $resultArray[$v[$newIndexSource]] = $v;
+                if ($unsetIndexKey)
+                    unset($v[$newIndexSource]);
+                continue;
+            }
+            // 数组格式多key组合索引处理
+            $k = '';
+            foreach ($newIndexSource as $index) {
+                $k .= "{$v[$index]}{$delimiter}";
+                if ($unsetIndexKey)
+                    unset($v[$index]);
+            }
+            $k = rtrim($k , $delimiter);
+            $resultArray[$k] = $v;
+        }
+        return $resultArray;
+    }
+
+    public function numGenerate(&$list,$offset)
+    {
+        $id = $offset + 1;
+        foreach ($list as $k => &$v){
+            $v['num'] =  $id ++;
+        }
+    }
+
+    public function getExcelDate($val)
+    {
+        if(empty($val)){
+            return null;
+        }
+        if(substr($val, 0, 1) == "4"){
+            return date('Y-m-d',\PHPExcel_Shared_Date::ExcelToPHP($val));
+        }
+        return  date('Y-m-d', strtotime($val));
+    }
+
+    public function buildWhere($where,$table)
+    {
+        $dist = "SELECT * FROM `{$table}`";
+        $sql = $this->model->where($where)->select(false);
+        if($sql == $dist){
+            return '';
+        }
+        $where = str_replace($dist . ' WHERE', '', $sql);
+        return 'and '. $where;
+    }
 }

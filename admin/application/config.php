@@ -297,7 +297,7 @@ return [
         //版本号
         'version' => '1.0.0.20190111_beta',
         //API接口地址
-        'api_url' => 'https://api.fastadmin.net',
+        'api_url' => 'https://api.net',
     ],
-    'api' => 'api.farm.chamshare.cn/'
+    'api' => 'api.f.cn/'
 ];

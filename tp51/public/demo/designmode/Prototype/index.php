@@ -18,10 +18,10 @@ class Color extends ColorPrototype{
   private $blue;
 
   //Constructors
-  function __construct($red , $green , $red){
+  function __construct($red , $green , $blue){
     $this->red = $red;
     $this->green = $green;
-    $this->blue = $red;
+    $this->blue = blue;
   }
 
   /**

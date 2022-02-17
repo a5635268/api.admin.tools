@@ -179,6 +179,13 @@ define(['jquery', 'bootstrap', 'toastr', 'layer', 'lang'], function ($, undefine
                 }
                 return Layer.open(options);
             },
+            parseParam: function (json) {
+                var paramStr = "";
+                $.each(json, function (i,n) {
+                    paramStr += "&" + i + "=" + encodeURIComponent(n);
+                });
+                return paramStr.substr(1);
+            },
             //关闭窗口并回传数据
             close: function (data) {
                 var index = parent.Layer.getFrameIndex(window.name);

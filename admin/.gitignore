@@ -7,5 +7,5 @@ thinkphp
 .env.16
 .DS_Store
 /runtime
-/note.php
+/test.php
 /note.md

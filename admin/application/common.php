@@ -383,3 +383,156 @@ function pdd($var,$die = true)
     d($var);
 }
 
+function division($val1,$val2, $point = 2)
+{
+    if ($val2 == 0){
+        return 0;
+    }
+    return round($val1/$val2, 2);
+}
+
+/**
+ * 比例相差值（同比，环比）
+ * author: xiaogang.zhou@qq.com
+ * datetime: 2021/10/26 13:21
+ * @param $val1
+ * @param $val2
+ * @return float|string
+ */
+function rate($val1, $val2)
+{
+    if ($val2 == 0 || $val1 == 0){
+        return '-';
+    }
+    return round(($val1-$val2)/$val2 * 100, 2);
+}
+
+function modelDataIndexId($data , $id="id")
+{
+    if (empty($data)){
+        return [];
+    }
+    $data = ($data[0] instanceof Model) ? collect($data)->toArray() : $data;
+    return resetArrayIndex($data, $id);
+}
+
+function resetArrayIndex($dataArray , $newIndexSource , string $delimiter = ':' , bool $unsetIndexKey = false)
+{
+    $resultArray = [];
+    foreach ($dataArray as $k => $v) {
+        // string格式的单key索引, 则直接赋值, 继续下一个
+        if (is_string($newIndexSource)) {
+            $resultArray[$v[$newIndexSource]] = $v;
+            if ($unsetIndexKey)
+                unset($v[$newIndexSource]);
+            continue;
+        }
+        // 数组格式多key组合索引处理
+        $k = '';
+        foreach ($newIndexSource as $index) {
+            $k .= "{$v[$index]}{$delimiter}";
+            if ($unsetIndexKey)
+                unset($v[$index]);
+        }
+        $k = rtrim($k , $delimiter);
+        $resultArray[$k] = $v;
+    }
+    return $resultArray;
+}
+
+/**
+ * 实例化服务层
+ * @param $name
+ * @return \think\Controller
+ */
+function service($name)
+{
+    /*    $nameArr = explode('/',$name);
+        if(1 == count($nameArr)){
+            $name = 'common/'. $name;
+        }*/
+    return controller($name, 'service');
+}
+
+if (!function_exists('price_format')) {
+    define_once('PRICE_FORMAT_FLOAT', 'float');
+    define_once('PRICE_FORMAT_STRING', 'string');
+
+    /**
+     * @param $val
+     * @param string $returnType PRICE_FORMAT_FLOAT|PRICE_FORMAT_STRING
+     * @param int $decimals
+     * @return float|string
+     */
+    function price_format($val, $returnType = 'string', $decimals = 2)
+    {
+        $val = floatval($val);
+        $result = number_format($val, $decimals, '.', '');
+        if ($returnType === PRICE_FORMAT_FLOAT) {
+            return (float)$result;
+        }
+        return $result;
+    }
+}
+
+
+//导出excel
+function exportExcel($data, $col_names = array(), $title = '', $sheet_title = '', $type = 0)
+{
+    if (!$data) return false;
+    $letters = ['A' , 'B' , 'C' , 'D' , 'E' , 'F' , 'G' , 'H' , 'I' , 'J' , 'K' , 'L' , 'M' , 'N' , 'O' , 'P' , 'Q' , 'R' , 'S' , 'T' , 'U' , 'V' , 'W' , 'X' , 'Y' , 'Z' , 'AA' , 'AB' , 'AC' , 'AD' , 'AE' , 'AF' , 'AG' , 'AH' , 'AI' , 'AJ' , 'AK' , 'AL' , 'AM' , 'AN'];
+    $col_count = count(current($data)); //总共的列数
+    $col_names = $col_names ?: array_keys(current($data)); //列名
+    $row_count = count($data);
+    $title = $title ?: 'export-' . date('Y-m-d-h-i-s'); //标题
+    $title .= '.xls';
+    $sheet_title = $sheet_title ?: 'sheet1';
+
+    $objPHPExcel = new \PHPExcel();
+
+    //列宽自适应
+    for ($i = 0; $i < $col_count; $i++) {
+        $objPHPExcel->getActiveSheet()->getColumnDimension($letters[$i])->setAutoSize(true);
+    }
+
+    //统一行高
+    for ($i = 1; $i <= $row_count + 1; $i++) {
+        $objPHPExcel->getActiveSheet()->getRowDimension($i)->setRowHeight(22);
+    }
+
+    //列名分配
+    for ($i = 0; $i <= $col_count; $i++) {
+        $col_name = $letters[$i] . '1';
+        $objPHPExcel->getActiveSheet()->setCellValue($col_name, $col_names[$i]);
+    }
+
+    //内容填充
+    $i = 2;
+    foreach ($data as $k => $v) {
+        $j = 0;
+        foreach ($v as $kk => $vv) {
+            $col_name = $letters[$j] . $i;
+            $objPHPExcel->getActiveSheet()->setCellValue($col_name, $vv);
+            $j++;
+        }
+        $i++;
+    }
+
+    $objPHPExcel->setActiveSheetIndex(0); //设置当前的sheet
+    $objPHPExcel->getActiveSheet()->setTitle($sheet_title);//设置s当前的sheet的name
+
+    //锁定表头
+    if ($type) {
+        $objPHPExcel->getActiveSheet()->freezePane("A2");
+    }
+
+    $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="' . $title . '.xlsx"');
+    header('Cache-Control: max-age=0');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Cache-Control: cache, must-revalidate');
+
+    $objWriter->save("php://output");
+}

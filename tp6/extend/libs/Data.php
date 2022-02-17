@@ -129,7 +129,7 @@ final class Data
      * @param string $fieldPid 父ID键名
      * @return array
      */
-    static public function parentChannel(array $data, int $sid, string $fieldPri = 'cid', string $fieldPid = 'pid'):array
+    static public function parentChannel(array $data, int $sid, string $fieldPri = 'cid', string $fieldPid = 'pid')
     {
         if (!$data) {
             return NULL;

@@ -27,7 +27,7 @@ class {%className%} extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getList($where = true ,string $fields = '*' ,string $order = null ,int $page = 1 ,int $pageSize = 20)
+    public function getList($where = true ,$fields = '*' ,string $order = null ,int $page = 1 ,int $pageSize = 20)
     {
         $data = [
             'count' => 0 ,
@@ -50,8 +50,8 @@ class {%className%} extends BaseModel
 
     public function getOne(int $id,string $fields='*')
     {
-        $user = self::where($this->pk, $id)->field($fields)->find();
-        return $user;
+        $data = self::where($this->pk, $id)->field($fields)->find();
+        return $data;
     }
 
     /**
@@ -61,7 +61,7 @@ class {%className%} extends BaseModel
      */
     public function add(array $data)
     {
-        Log::info('add in parameter' , $data);
+        Log::info('入口参数' , $data);
 
         // 6.0自动过滤非数据表字段
         self::create($data);

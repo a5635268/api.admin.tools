@@ -37,7 +37,7 @@ class {%className%} extends BaseController
      * POST	blog
      * @return array
      */
-    public function create():array
+    public function create()
     {
         try {
             return $this->model->add($this->params);
@@ -51,7 +51,7 @@ class {%className%} extends BaseController
      * GET	blog/:id
      * @return array
      */
-    public function content():array
+    public function content()
     {
         try {
             return $this->model->getOne($this->params);
@@ -65,7 +65,7 @@ class {%className%} extends BaseController
      * PUT	blog/:id
      * @return array
      */
-    public function update():array
+    public function update()
     {
         try {
             return $this->model->edit($this->params);
@@ -80,7 +80,7 @@ class {%className%} extends BaseController
      * DELETE	blog/:id
      * @return array
      */
-    public function delete():array
+    public function delete()
     {
         try {
             return $this->model->del($this->params);
@@ -94,7 +94,7 @@ class {%className%} extends BaseController
      * PUT	blog/:id/enable
      * @return array
      */
-    public function enable():array
+    public function enable()
     {
         try {
             return $this->model->changeStatus($this->params , 1);
@@ -108,7 +108,7 @@ class {%className%} extends BaseController
      * PUT	blog/:id/disable
      * @return array
      */
-    public function disable():array
+    public function disable()
     {
         try {
             return $this->model->changeStatus($this->params , 0);

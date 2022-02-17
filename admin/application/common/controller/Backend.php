@@ -516,7 +516,7 @@ class Backend extends Controller
         return $resultArray;
     }
 
-    public function numGenerate(&$list,$offset)
+    protected function numGenerate(&$list,$offset)
     {
         $id = $offset + 1;
         foreach ($list as $k => &$v){
@@ -524,7 +524,7 @@ class Backend extends Controller
         }
     }
 
-    public function getExcelDate($val)
+    protected function getExcelDate($val)
     {
         if(empty($val)){
             return null;
@@ -535,7 +535,7 @@ class Backend extends Controller
         return  date('Y-m-d', strtotime($val));
     }
 
-    public function buildWhere($where,$table)
+    protected function buildWhere($where,$table)
     {
         $dist = "SELECT * FROM `{$table}`";
         $sql = $this->model->where($where)->select(false);

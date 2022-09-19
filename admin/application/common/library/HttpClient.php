@@ -3,14 +3,23 @@
 namespace app\common\library;
 
 use fast\Curl;
+use think\Env;
+use traits\controller\Jump;
 
+/**
+ * @method void post($url, $data = '', $follow_303_with_post = false);
+ * @method void get($url, $data = array());
+ * author: xiaogang.zhou@qq.com
+ * datetime: 2022/9/17 12:49
+ * @package app\common\library
+ */
 class HttpClient {
 
     private  $_curl;
     private static $_instance = null;
     private $debug = 0;
 
-    use \traits\controller\Jump;
+    use Jump;
 
     public function __construct() {
         $this->_curl = self::getInstance();
@@ -25,7 +34,7 @@ class HttpClient {
         return self::$_instance;
     }
 
-    public function debug($isBug = true)
+    public function debug($isBug = 1)
     {
         $this->debug = $isBug;
         return $this;
@@ -36,18 +45,19 @@ class HttpClient {
         if(!method_exists($this->_curl,$method)){
             $this->error('错误调用');
         }
-        $requestEntry = Config('api') . $arguments[0];
+        $requestEntry = Env::get('api_url'). 'admin/' . $arguments[0];
         $params = $arguments[1];
         array_walk($params, function (&$item) {
             $item = is_array($item) ? json_encode($item) : (string) $item;
         });
         krsort($params);
-        $key = md5(md5(json_encode($params)) . Config('api_sign_key'));
+        $key = md5(md5(json_encode($params , 320)) . Env::get('api_secret'));
+        $params['_time'] = NOW;
         $params['_sign'] = $key;
-        //        $this->_curl->setOpt(CURLOPT_SSL_VERIFYPEER, FALSE);
-        //        $this->_curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
-        $result = $this->_curl->$method($requestEntry,$params);
-        if(true === $this->debug){
+        $this->_curl->setOpt(CURLOPT_SSL_VERIFYPEER, FALSE);
+        $this->_curl->setOpt(CURLOPT_SSL_VERIFYHOST, FALSE);
+        $result = $this->_curl->$method($requestEntry , $params);
+        if(1 === $this->debug){
             header("Content-type: text/html; charset=utf-8");
             echo "<pre>";
             print_r($result);
@@ -67,8 +77,8 @@ class HttpClient {
         if (empty($result)) {
             $this->error('服务层请求失败');
         }
-        if($result->code !== 0){
-            $this->error( $result->message ? : '服务层请求失败');
+        if(intval($result->code) !== 0){
+            $this->error( $result->msg ? : '服务层请求失败');
         }
         return  $this->object2array($result);
     }

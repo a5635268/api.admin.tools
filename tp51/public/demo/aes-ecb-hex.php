@@ -38,6 +38,7 @@ class OpenSSLAES
     {
         // 默认是以base64位输出,此处指定二进制输出，然后自己转换
         $options = OPENSSL_RAW_DATA;
+//        $options = OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING;
 
         // key是必须要设置的
         $this->secret_key = isset($key) ? $key : exit('key为必须项');
@@ -76,9 +77,19 @@ class OpenSSLAES
     }
 }
 
-$aes = new OpenSSLAES('12345678');
+$str = '123456789012345';
+$encrypted_openssl = openssl_encrypt($str, "AES-128-ECB",
+                                     $str, OPENSSL_RAW_DATA);
+echo base64_encode($encrypted_openssl);die;
+die;
 
-$encrypted = $aes->encrypt('123456');
+$aes = new OpenSSLAES('123456789012345');
+
+$encrypted = $aes->encrypt('123456789012345');
+
+echo bin2hex($encrypted) ;die;
+
+echo $encrypted;die;
 
 echo base64_encode($encrypted);die;
 

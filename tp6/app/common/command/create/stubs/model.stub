@@ -50,7 +50,9 @@ class {%className%} extends BaseModel
 
     public function getOne(int $id,string $fields='*')
     {
-        $data = self::where($this->pk, $id)->field($fields)->find();
+        $data = self::where($this->pk, $id)
+        ->field($fields)
+        ->find();
         return $data;
     }
 
@@ -76,10 +78,9 @@ class {%className%} extends BaseModel
     public function edit(array $data)
     {
         Log::info('edit in parameter' , $data);
-        // 更新失败会抛错误到上层，不用判断
-        $this->allowField(true)
-            ->isUpdate(true)
-            ->save($data);
+        self::find($data['id'])
+                    ->allowField([])
+                    ->save($data);
         return $this->returnSucc('编辑成功');
     }
 
